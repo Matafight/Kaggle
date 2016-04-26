@@ -16,7 +16,7 @@ def dense_to_onehot(label_dense,num_class):
     
     
 LEARNING_RATE  = 1e-4
-TRAINING_ITERATIONS = 2000
+TRAINING_ITERATIONS = 200
 
 DROPOUT = 0.5
 BATCH_SIZE = 50
@@ -49,7 +49,7 @@ labels=dense_to_onehot(labels_flat,labels_count)
 labels=labels.astype(np.uint8)
 
 validation_images=image[0:VALIDATION_SIZE,:]
-validataion_labels=labels[0:VALIDATION_SIZE,:]
+validation_labels=labels[0:VALIDATION_SIZE,:]
 
 train_images=image[VALIDATION_SIZE:,:]
 train_label=labels[VALIDATION_SIZE:,:]
@@ -117,7 +117,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction,'float'))
 predict= tf.argmax(y,1)
 
 
-epochs_completed= 0
+epoches_completed= 0
 index_in_epoch = 0
 num_examples = train_images.shape[0]
 
@@ -125,7 +125,7 @@ def next_batch(batch_size):
     global train_images
     global train_label
     global index_in_epoch
-    global epochs_completed
+    global epoches_completed
     start = index_in_epoch
     index_in_epoch += batch_size
     
@@ -147,3 +147,39 @@ init = tf.initialize_all_variables()
 sess = tf.InteractiveSession()
 sess.run(init)
 
+#visualiszaion variables
+train_accuracies=[]
+validation_accuracies=[]
+x_range = []
+
+display_step=1
+
+for i in range(TRAINING_ITERATIONS):
+    batch_xs,batch_ys = next_batch(BATCH_SIZE)
+    
+    if i%display_step ==0 or (i+1) == TRAINING_ITERATIONS:
+        train_accuracy = accuracy.eval(feed_dict ={x:batch_xs,y_:batch_ys,keep_prob:1.0})
+        if(VALIDATION_SIZE):
+            validation_accuracy = accuracy.eval(feed_dict={x:validation_images[0:BATCH_SIZE],y_:validation_labels[0:BATCH_SIZE],keep_prob:1.0})
+            print("training acc / validation acc => %.2f /%.2f for step %d"%(train_accuracy,validation_accuracy,i))
+            validation_accuracies.append(validation_accuracy)
+        else:
+            print("training acc => %0.4f for step %d"%(train_accuracy,i))
+        train_accuracies.append(train_accuracy)
+    x_range.append(i)
+    if(i%(display_step*10)==0 & i):
+        display_step = display_step*10
+    sess.run(train_step,feed_dict={x:batch_xs,y_:batch_ys,keep_prob:DROPOUT})
+                                                                                                                                                                                                                                                                    
+testdata = pd.read_csv('./input/test.csv')
+
+testimage = testdata.astype(np.float)
+testimage = np.multiply(testimage,1.0/255.0)
+predicted_label = np.zeros(testimage.shape[0])
+
+predicted_label = predict.eval(feed_dict={x:testimage,keep_prob:DROPOUT})
+
+np.savetxt('submission_softmax.csv', np.c_[range(1,len(testimage)+1),predicted_label], delimiter=',', header = 'ImageId,Label', comments = '', fmt='%d')
+
+            
+    
