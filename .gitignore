@@ -1,1 +1,4 @@
 ./MNIST/input/*
+./National Data Science Bowl/kaggle-ndsb1/data/*
+./SFCrime/data/*
+./Face/data/*

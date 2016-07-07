@@ -16,7 +16,7 @@ def dense_to_onehot(label_dense,num_class):
     
     
 LEARNING_RATE  = 1e-4
-TRAINING_ITERATIONS = 200
+TRAINING_ITERATIONS = 2000
 
 DROPOUT = 0.5
 BATCH_SIZE = 50
