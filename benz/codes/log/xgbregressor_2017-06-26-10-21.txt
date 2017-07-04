@@ -1,0 +1,136 @@
+2017-06-26-10-21
+num_round:30 task:regression colsample_bytree:0.1 silent:1 nthread:5 min_child_weight:8.0 subsample:0.6 eta:0.45 objective:reg:linear max_evals:200 seed:10 max_depth:8 gamma:1.7 booster:gbtree training score:0.643767907123
+cv score of current parameter: 0.493696266472
+num_round:30 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:2.0 subsample:0.5 eta:0.81 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.0 booster:gbtree training score:0.686417980061
+cv score of current parameter: 0.414360599436
+num_round:25 task:regression colsample_bytree:0.3 silent:1 nthread:5 min_child_weight:9.0 subsample:1.0 eta:0.98 objective:reg:linear max_evals:200 seed:10 max_depth:8 gamma:0.7 booster:gbtree training score:0.761748595119
+cv score of current parameter: 0.425278508346
+num_round:65 task:regression colsample_bytree:0.1 silent:1 nthread:5 min_child_weight:7.0 subsample:0.6 eta:0.71 objective:reg:linear max_evals:200 seed:10 max_depth:6 gamma:1.1 booster:gbtree training score:0.692941488086
+cv score of current parameter: 0.425697038356
+num_round:50 task:regression colsample_bytree:0.3 silent:1 nthread:5 min_child_weight:2.0 subsample:0.7 eta:0.93 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.0 booster:gbtree training score:0.70524922248
+cv score of current parameter: 0.40809020405
+num_round:30 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:8.0 subsample:0.5 eta:0.41 objective:reg:linear max_evals:200 seed:10 max_depth:8 gamma:0.6 booster:gbtree training score:0.721432805375
+cv score of current parameter: 0.4936940735
+num_round:55 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:6.0 subsample:0.7 eta:0.85 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.4 booster:gbtree training score:0.717475943935
+cv score of current parameter: 0.438374486368
+num_round:70 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:6.0 subsample:0.9 eta:0.76 objective:reg:linear max_evals:200 seed:10 max_depth:6 gamma:0.9 booster:gbtree training score:0.860552125678
+cv score of current parameter: 0.428188441945
+num_round:30 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:2.0 subsample:0.8 eta:0.81 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.6 booster:gbtree training score:0.613589988176
+cv score of current parameter: 0.54403966169
+num_round:10 task:regression colsample_bytree:0.4 silent:1 nthread:5 min_child_weight:3.0 subsample:0.9 eta:0.78 objective:reg:linear max_evals:200 seed:10 max_depth:7 gamma:1.5 booster:gbtree training score:0.687019453132
+cv score of current parameter: 0.516030360305
+num_round:65 task:regression colsample_bytree:0.2 silent:1 nthread:5 min_child_weight:3.0 subsample:0.5 eta:0.05 objective:reg:linear max_evals:200 seed:10 max_depth:10 gamma:0.7 booster:gbtree training score:0.527206734011
+cv score of current parameter: 0.468854766767
+num_round:60 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:9.0 subsample:0.7 eta:0.05 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.1 booster:gbtree training score:0.447637266271
+cv score of current parameter: 0.438964793527
+num_round:20 task:regression colsample_bytree:0.4 silent:1 nthread:5 min_child_weight:6.0 subsample:0.7 eta:0.48 objective:reg:linear max_evals:200 seed:10 max_depth:6 gamma:1.5 booster:gbtree training score:0.672961696438
+cv score of current parameter: 0.521553868956
+num_round:10 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:4.0 subsample:0.7 eta:0.76 objective:reg:linear max_evals:200 seed:10 max_depth:6 gamma:1.9 booster:gbtree training score:0.643439087404
+cv score of current parameter: 0.512638939223
+num_round:40 task:regression colsample_bytree:0.2 silent:1 nthread:5 min_child_weight:6.0 subsample:0.6 eta:0.37 objective:reg:linear max_evals:200 seed:10 max_depth:8 gamma:1.6 booster:gbtree training score:0.707930992067
+cv score of current parameter: 0.488097610235
+num_round:30 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:0.0 subsample:0.9 eta:0.41 objective:reg:linear max_evals:200 seed:10 max_depth:7 gamma:0.4 booster:gbtree training score:0.814038971441
+cv score of current parameter: 0.522344162967
+num_round:15 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:5.0 subsample:0.6 eta:0.28 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:0.9 booster:gbtree training score:0.585314039892
+cv score of current parameter: 0.56729356106
+num_round:20 task:regression colsample_bytree:0.6 silent:1 nthread:5 min_child_weight:9.0 subsample:0.7 eta:0.53 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.6 booster:gbtree training score:0.629796795248
+cv score of current parameter: 0.542698107632
+num_round:15 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:1.0 subsample:0.5 eta:0.1 objective:reg:linear max_evals:200 seed:10 max_depth:9 gamma:0.2 booster:gbtree training score:-2.11198055204
+cv score of current parameter: -2.15900821414
+num_round:25 task:regression colsample_bytree:0.1 silent:1 nthread:5 min_child_weight:6.0 subsample:0.9 eta:0.37 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.3 booster:gbtree training score:0.525081163474
+cv score of current parameter: 0.538396246412
+num_round:40 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:4.0 subsample:0.8 eta:0.22 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.9 booster:gbtree training score:0.550499103238
+cv score of current parameter: 0.549372979947
+num_round:40 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:4.0 subsample:0.8 eta:0.21 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.9 booster:gbtree training score:0.590632755598
+cv score of current parameter: 0.56777809793
+num_round:80 task:regression colsample_bytree:0.6 silent:1 nthread:5 min_child_weight:4.0 subsample:0.8 eta:0.19 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:0.2 booster:gbtree training score:0.605359165519
+cv score of current parameter: 0.563303609853
+num_round:40 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:5.0 subsample:1.0 eta:0.27 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.2 booster:gbtree training score:0.592498066721
+cv score of current parameter: 0.567578099228
+num_round:45 task:regression colsample_bytree:0.5 silent:1 nthread:5 min_child_weight:5.0 subsample:1.0 eta:0.6 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:2.0 booster:gbtree training score:0.607441200765
+cv score of current parameter: 0.555664045038
+num_round:40 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:3.0 subsample:1.0 eta:0.29 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.3 booster:gbtree training score:0.62703987518
+cv score of current parameter: 0.556989642047
+num_round:50 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:7.0 subsample:1.0 eta:0.17 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.8 booster:gbtree training score:0.60594251936
+cv score of current parameter: 0.568387803769
+num_round:50 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:7.0 subsample:0.8 eta:0.14 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.8 booster:gbtree training score:0.602668711382
+cv score of current parameter: 0.568728127817
+num_round:75 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:8.0 subsample:0.9 eta:0.12 objective:reg:linear max_evals:200 seed:10 max_depth:5 gamma:1.8 booster:gbtree training score:0.66023412985
+cv score of current parameter: 0.563090806668
+num_round:50 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:10.0 subsample:1.0 eta:0.02 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.7 booster:gbtree training score:-7.80983332593
+cv score of current parameter: -7.96469164239
+num_round:55 task:regression colsample_bytree:0.6 silent:1 nthread:5 min_child_weight:7.0 subsample:0.8 eta:0.14 objective:reg:linear max_evals:200 seed:10 max_depth:5 gamma:2.0 booster:gbtree training score:0.6415183893
+cv score of current parameter: 0.560601245757
+num_round:50 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:7.0 subsample:0.9 eta:0.57 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.8 booster:gbtree training score:0.660234149321
+cv score of current parameter: 0.536183192278
+num_round:60 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:9.0 subsample:1.0 eta:0.01 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.7 booster:gbtree training score:-18.4460939669
+cv score of current parameter: -18.8392183288
+num_round:35 task:regression colsample_bytree:0.5 silent:1 nthread:5 min_child_weight:8.0 subsample:0.6 eta:0.31 objective:reg:linear max_evals:200 seed:10 max_depth:5 gamma:1.4 booster:gbtree training score:0.654462400375
+cv score of current parameter: 0.538489881297
+num_round:45 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:10.0 subsample:0.8 eta:0.66 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:0.0 booster:gbtree training score:0.648289250013
+cv score of current parameter: 0.534150675548
+num_round:55 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:7.0 subsample:0.9 eta:0.15 objective:reg:linear max_evals:200 seed:10 max_depth:5 gamma:1.8 booster:gbtree training score:0.651809935004
+cv score of current parameter: 0.561604600195
+num_round:65 task:regression colsample_bytree:0.6 silent:1 nthread:5 min_child_weight:7.0 subsample:1.0 eta:0.35 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:0.8 booster:gbtree training score:0.669385083962
+cv score of current parameter: 0.543787370424
+num_round:60 task:regression colsample_bytree:0.5 silent:1 nthread:5 min_child_weight:8.0 subsample:0.9 eta:0.43 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.1 booster:gbtree training score:0.575399521438
+cv score of current parameter: 0.560917559548
+num_round:70 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:9.0 subsample:0.8 eta:0.07 objective:reg:linear max_evals:200 seed:10 max_depth:7 gamma:1.4 booster:gbtree training score:0.648362108997
+cv score of current parameter: 0.562010188197
+num_round:70 task:regression colsample_bytree:0.4 silent:1 nthread:5 min_child_weight:8.0 subsample:0.6 eta:0.89 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:2.0 booster:gbtree training score:0.650170182508
+cv score of current parameter: 0.441778764765
+num_round:35 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:6.0 subsample:0.5 eta:0.18 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:0.5 booster:gbtree training score:0.620685543316
+cv score of current parameter: 0.559143891577
+num_round:50 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:10.0 subsample:1.0 eta:0.25 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.5 booster:gbtree training score:0.591792947812
+cv score of current parameter: 0.568508468217
+num_round:75 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:10.0 subsample:0.7 eta:0.48 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.5 booster:gbtree training score:0.623063033061
+cv score of current parameter: 0.546014772943
+num_round:55 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:10.0 subsample:0.9 eta:0.23 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.2 booster:gbtree training score:0.561625726374
+cv score of current parameter: 0.559629539771
+num_round:35 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:9.0 subsample:0.7 eta:0.09 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.0 booster:gbtree training score:0.501213644892
+cv score of current parameter: 0.488068724596
+num_round:45 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:0.0 subsample:0.8 eta:0.34 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.7 booster:gbtree training score:0.6143152325
+cv score of current parameter: 0.562949646262
+num_round:65 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:9.0 subsample:0.6 eta:0.25 objective:reg:linear max_evals:200 seed:10 max_depth:9 gamma:1.3 booster:gbtree training score:0.786565714421
+cv score of current parameter: 0.508230336499
+num_round:60 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:1.0 subsample:0.7 eta:0.68 objective:reg:linear max_evals:200 seed:10 max_depth:6 gamma:1.5 booster:gbtree training score:0.870859140963
+cv score of current parameter: 0.439561874352
+num_round:50 task:regression colsample_bytree:0.3 silent:1 nthread:5 min_child_weight:10.0 subsample:0.5 eta:0.53 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.6 booster:gbtree training score:0.572287773348
+cv score of current parameter: 0.550675032276
+num_round:55 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:6.0 subsample:0.9 eta:0.03 objective:reg:linear max_evals:200 seed:10 max_depth:5 gamma:0.9 booster:gbtree training score:-1.65144240204
+cv score of current parameter: -1.67423731484
+num_round:25 task:regression colsample_bytree:0.4 silent:1 nthread:5 min_child_weight:8.0 subsample:1.0 eta:0.97 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.2 booster:gbtree training score:0.593702789843
+cv score of current parameter: 0.534533354383
+num_round:45 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:3.0 subsample:0.9 eta:0.32 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:0.8 booster:gbtree training score:0.641628526279
+cv score of current parameter: 0.553898387911
+num_round:25 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:2.0 subsample:0.8 eta:0.38 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.9 booster:gbtree training score:0.668681545416
+cv score of current parameter: 0.553328918453
+num_round:30 task:regression colsample_bytree:0.2 silent:1 nthread:5 min_child_weight:5.0 subsample:0.7 eta:0.45 objective:reg:linear max_evals:200 seed:10 max_depth:7 gamma:1.5 booster:gbtree training score:0.69614603503
+cv score of current parameter: 0.503048636274
+num_round:80 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:6.0 subsample:0.5 eta:0.4 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.4 booster:gbtree training score:0.580024302788
+cv score of current parameter: 0.55274017814
+num_round:75 task:regression colsample_bytree:0.6 silent:1 nthread:5 min_child_weight:1.0 subsample:0.6 eta:0.25 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.0 booster:gbtree training score:0.625365819722
+cv score of current parameter: 0.559167601063
+num_round:35 task:regression colsample_bytree:0.8 silent:1 nthread:5 min_child_weight:9.0 subsample:1.0 eta:0.07 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:1.6 booster:gbtree training score:0.181550095981
+cv score of current parameter: 0.181545304556
+num_round:65 task:regression colsample_bytree:0.3 silent:1 nthread:5 min_child_weight:7.0 subsample:0.8 eta:0.62 objective:reg:linear max_evals:200 seed:10 max_depth:6 gamma:0.6 booster:gbtree training score:0.787457619164
+cv score of current parameter: 0.449941052924
+num_round:20 task:regression colsample_bytree:0.9 silent:1 nthread:5 min_child_weight:4.0 subsample:0.7 eta:0.48 objective:reg:linear max_evals:200 seed:10 max_depth:10 gamma:1.7 booster:gbtree training score:0.798754162027
+cv score of current parameter: 0.478997381577
+num_round:50 task:regression colsample_bytree:0.7 silent:1 nthread:5 min_child_weight:8.0 subsample:0.9 eta:0.12 objective:reg:linear max_evals:200 seed:10 max_depth:9 gamma:1.3 booster:gbtree training score:0.699357879699
+cv score of current parameter: 0.555723116455
+num_round:40 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:10.0 subsample:1.0 eta:0.21 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.9 booster:gbtree training score:0.60129426825
+cv score of current parameter: 0.569491504506
+num_round:40 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:10.0 subsample:1.0 eta:0.21 objective:reg:linear max_evals:200 seed:10 max_depth:1 gamma:1.9 booster:gbtree training score:0.548667654583
+cv score of current parameter: 0.549728584897
+num_round:35 task:regression colsample_bytree:0.3 silent:1 nthread:5 min_child_weight:10.0 subsample:1.0 eta:0.54 objective:reg:linear max_evals:200 seed:10 max_depth:2 gamma:1.1 booster:gbtree training score:0.590678810464
+cv score of current parameter: 0.555103909198
+num_round:30 task:regression colsample_bytree:0.5 silent:1 nthread:5 min_child_weight:9.0 subsample:1.0 eta:0.74 objective:reg:linear max_evals:200 seed:10 max_depth:4 gamma:0.3 booster:gbtree training score:0.66016619263
+cv score of current parameter: 0.521130213728
+num_round:10 task:regression colsample_bytree:0.2 silent:1 nthread:5 min_child_weight:9.0 subsample:0.9 eta:0.81 objective:reg:linear max_evals:200 seed:10 max_depth:5 gamma:2.0 booster:gbtree training score:0.608669932577
+cv score of current parameter: 0.527367285919
+num_round:45 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:8.0 subsample:1.0 eta:0.15 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.8 booster:gbtree training score:0.596594031226
+cv score of current parameter: 0.571075411458
+num_round:40 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:8.0 subsample:1.0 eta:0.29 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.9 booster:gbtree training score:0.617859293718
+cv score of current parameter: 0.563756357397
+num_round:45 task:regression colsample_bytree:1.0 silent:1 nthread:5 min_child_weight:10.0 subsample:1.0 eta:0.17 objective:reg:linear max_evals:200 seed:10 max_depth:3 gamma:1.6 booster:gbtree training score:0.60204755126

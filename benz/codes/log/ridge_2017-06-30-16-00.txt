@@ -1,0 +1,19 @@
+2017-06-30-16-00
+training score:0.619487400102
+cv score of current parameter: 0.52259063819
+training score:0.619991727532
+cv score of current parameter: 0.515806602853
+training score:0.61914845515
+cv score of current parameter: 0.524636851964
+training score:0.618405920289
+cv score of current parameter: 0.528186391828
+training score:0.614066206392
+cv score of current parameter: 0.540666763595
+training score:0.618672240462
+cv score of current parameter: 0.527014450929
+training score:0.604652740686
+cv score of current parameter: 0.551964645085
+training score:0.618590346527
+cv score of current parameter: 0.527384809426
+training score:0.619963593409
+cv score of current parameter: 0.51736941019

@@ -1,0 +1,16 @@
+0. pca , ica, svd etc
+1. stacking method for lasso,randomforestregressor etc
+2. combine different methods using weighted bagging, just try, refer to crowd search results no.1 solution
+3. try to use tensorflow
+4. analysis local cv and lb cv
+5. use multial information gain or fscore in xgb to rank the features?
+6. add id as features may be better?
+7. stacking 的单个模型效果要好，不然容易拖后腿。
+8. CV 与 LB 的结果应当一致
+ stacking 的交叉验证方法
+
+bleeding 与 stacking 的区别
+
+对于线性模型，数据要 normalized
+tree based 则不用
+sklearn中有 standscaler函数，但是这个函数适用于稠密数据，对于稀疏数据standscaler有一个参数是with_mean,设置为false就好。

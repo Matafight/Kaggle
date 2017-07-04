@@ -1,0 +1,133 @@
+2017-06-28-14-28
+training score:0.596901202699
+cv score of current parameter: nan
+training score:0.619850460774
+cv score of current parameter: nan
+training score:0.611239221167
+cv score of current parameter: nan
+training score:0.619290929235
+cv score of current parameter: nan
+training score:0.618645152111
+cv score of current parameter: nan
+training score:0.618289664221
+cv score of current parameter: nan
+training score:0.613912790124
+cv score of current parameter: nan
+training score:0.61985693896
+cv score of current parameter: nan
+training score:0.619550945232
+cv score of current parameter: nan
+training score:0.61882998159
+cv score of current parameter: nan
+training score:0.612295188261
+cv score of current parameter: nan
+training score:0.601029352296
+cv score of current parameter: nan
+training score:0.61964860805
+cv score of current parameter: nan
+training score:0.613908374543
+cv score of current parameter: nan
+training score:0.619799148736
+cv score of current parameter: nan
+training score:0.615672103475
+cv score of current parameter: nan
+training score:0.619874833965
+cv score of current parameter: nan
+training score:0.619868836245
+cv score of current parameter: nan
+training score:0.619875459477
+cv score of current parameter: nan
+training score:0.619872146805
+cv score of current parameter: nan
+training score:0.58975799356
+cv score of current parameter: nan
+training score:0.619874168719
+cv score of current parameter: nan
+training score:0.609635549742
+cv score of current parameter: nan
+training score:0.619876097702
+cv score of current parameter: nan
+training score:0.617719582902
+cv score of current parameter: nan
+training score:0.58345812398
+cv score of current parameter: nan
+training score:0.617833859974
+cv score of current parameter: nan
+training score:0.619871791478
+cv score of current parameter: nan
+training score:0.609352388887
+cv score of current parameter: nan
+training score:0.554214949316
+cv score of current parameter: nan
+training score:0.617385820312
+cv score of current parameter: nan
+training score:0.584987438066
+cv score of current parameter: nan
+training score:0.578050713466
+cv score of current parameter: nan
+training score:0.619875238315
+cv score of current parameter: nan
+training score:0.560703720713
+cv score of current parameter: nan
+training score:0.565072524489
+cv score of current parameter: nan
+training score:0.561993431823
+cv score of current parameter: nan
+training score:0.560105318644
+cv score of current parameter: nan
+training score:0.619734313413
+cv score of current parameter: nan
+training score:0.567530541836
+cv score of current parameter: nan
+training score:0.618973608353
+cv score of current parameter: nan
+training score:0.577670332339
+cv score of current parameter: nan
+training score:0.619872284231
+cv score of current parameter: nan
+training score:0.619874093557
+cv score of current parameter: nan
+training score:0.619873042497
+cv score of current parameter: nan
+training score:0.608948333963
+cv score of current parameter: nan
+training score:0.561828633901
+cv score of current parameter: nan
+training score:0.591004666158
+cv score of current parameter: nan
+training score:0.619875203978
+cv score of current parameter: nan
+training score:0.619753228174
+cv score of current parameter: nan
+training score:0.566328626261
+cv score of current parameter: nan
+training score:0.572105960703
+cv score of current parameter: nan
+training score:0.619869224369
+cv score of current parameter: nan
+training score:0.586981938358
+cv score of current parameter: nan
+training score:0.611039426364
+cv score of current parameter: nan
+training score:0.61973464715
+cv score of current parameter: nan
+training score:0.619627866092
+cv score of current parameter: nan
+training score:0.577939749193
+cv score of current parameter: nan
+training score:0.615613715064
+cv score of current parameter: nan
+training score:0.619871682592
+cv score of current parameter: nan
+training score:0.57909974103
+cv score of current parameter: nan
+training score:0.599139417399
+cv score of current parameter: nan
+training score:0.576696265786
+cv score of current parameter: nan
+training score:0.59085077332
+cv score of current parameter: nan
+training score:0.616430414247
+cv score of current parameter: nan
+training score:0.619446771812
+cv score of current parameter: nan
