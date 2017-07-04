@@ -3,10 +3,10 @@
 ./SFCrime/data/*
 ./Face/data/*
 .ipynb_checkpoints/
-input/
-models/
+input/*
+models/*
 other_codes/
-submissions/
+submissions/*
 test/
 .idea/
 _pycache/
