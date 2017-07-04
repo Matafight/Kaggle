@@ -2,3 +2,12 @@
 ./National Data Science Bowl/kaggle-ndsb1/data/*
 ./SFCrime/data/*
 ./Face/data/*
+.ipynb_checkpoints/
+input/
+models/
+other_codes/
+submissions/
+test/
+.idea/
+_pycache/
+*.un~
