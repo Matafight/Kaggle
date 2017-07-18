@@ -11,4 +11,5 @@ test/
 .idea/
 _pycache_/
 log/
+*.pyc
 *.un~
