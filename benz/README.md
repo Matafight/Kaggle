@@ -39,3 +39,7 @@
 # submissions
 
 保存模型对于test数据的预测值，用来提交到kaggle上。
+
+# other_codes
+
+kaggle kernel中可供参考的代码

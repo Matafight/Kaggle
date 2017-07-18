@@ -311,7 +311,5 @@ if __name__=="__main__":
     config = config_parser()
     print(config)
     train_X,train_y,test_X = load_data(config.train_name,config.test_name)
-    #methods = ['xgb','randomforest','gbregressor','lasso','xgbregressor','ridge','svr']
-    #model_name = methods[5]
     xgb_opt = hyperopt_opt(config.model_name,train_X,train_y,test_X,config.save_model,config.genp)
     xgb_opt.main_tunning()

@@ -1,0 +1,404 @@
+2017-07-05-15-14
+training score:0.619689609462
+cv score of current parameter: 0.522701301261
+training score:0.619861714642
+cv score of current parameter: 0.517472659961
+training score:0.618400366007
+cv score of current parameter: 0.53209765491
+training score:0.619418704642
+cv score of current parameter: 0.525698689694
+training score:0.557621720833
+cv score of current parameter: 0.553769661724
+training score:0.573676641173
+cv score of current parameter: 0.563053172661
+training score:0.611753810677
+cv score of current parameter: 0.5496738595
+training score:0.593488157616
+cv score of current parameter: 0.563594344622
+training score:0.600602956819
+cv score of current parameter: 0.560670415791
+training score:0.619311860191
+cv score of current parameter: 0.526609905289
+training score:0.619856471061
+cv score of current parameter: 0.517611173294
+training score:0.61987592059
+cv score of current parameter: 0.516221336001
+training score:0.619129434889
+cv score of current parameter: 0.528052357927
+training score:0.614602881222
+cv score of current parameter: 0.545083687866
+training score:0.617493901301
+cv score of current parameter: 0.535943390098
+training score:0.619875023103
+cv score of current parameter: 0.516635884782
+training score:0.619806226045
+cv score of current parameter: 0.519735896926
+training score:0.619875460531
+cv score of current parameter: 0.516434172372
+training score:0.61984518023
+cv score of current parameter: 0.518156594733
+training score:0.619847841401
+cv score of current parameter: 0.518010325966
+training score:0.55503038496
+cv score of current parameter: 0.551930606923
+training score:0.581924897573
+cv score of current parameter: 0.565823076646
+training score:0.586512789548
+cv score of current parameter: 0.565439377427
+training score:0.583513095657
+cv score of current parameter: 0.565943721978
+training score:0.579001991407
+cv score of current parameter: 0.565279528627
+training score:0.606656829969
+cv score of current parameter: 0.554975963147
+training score:0.577394118465
+cv score of current parameter: 0.564671421028
+training score:0.602934835013
+cv score of current parameter: 0.558782469643
+training score:0.552797346166
+cv score of current parameter: 0.550289340407
+training score:0.614989573327
+cv score of current parameter: 0.544188746104
+training score:0.587047303341
+cv score of current parameter: 0.565178633775
+training score:0.568140499762
+cv score of current parameter: 0.560347710572
+training score:0.616874544158
+cv score of current parameter: 0.538434101425
+training score:0.609759690236
+cv score of current parameter: 0.552083398689
+training score:0.597211587211
+cv score of current parameter: 0.562490026539
+training score:0.58411540596
+cv score of current parameter: 0.565968180682
+training score:0.585792436015
+cv score of current parameter: 0.565682307044
+training score:0.567657252793
+cv score of current parameter: 0.560079396394
+training score:0.619678878376
+cv score of current parameter: 0.522882293688
+training score:0.606299202919
+cv score of current parameter: 0.55529603125
+training score:0.614496456272
+cv score of current parameter: 0.545323649154
+training score:0.618700352029
+cv score of current parameter: 0.530666457447
+training score:0.591396244859
+cv score of current parameter: 0.564183813292
+training score:0.570225406938
+cv score of current parameter: 0.56137287883
+training score:0.601911863956
+cv score of current parameter: 0.559675042963
+training score:0.561344287056
+cv score of current parameter: 0.556231350981
+training score:0.619659481838
+cv score of current parameter: 0.523209862475
+training score:0.61987044275
+cv score of current parameter: 0.517451911764
+training score:0.616483078314
+cv score of current parameter: 0.540102679854
+training score:0.594981640572
+cv score of current parameter: 0.563127531975
+training score:0.612170560792
+cv score of current parameter: 0.54901145311
+training score:0.617973084152
+cv score of current parameter: 0.534023294939
+training score:0.581742735084
+cv score of current parameter: 0.565800589265
+training score:0.618910679792
+cv score of current parameter: 0.529481537432
+training score:0.619416046242
+cv score of current parameter: 0.525722777819
+training score:0.57522181446
+cv score of current parameter: 0.563753853314
+training score:0.619769992937
+cv score of current parameter: 0.520916988936
+training score:0.606476315124
+cv score of current parameter: 0.55514058619
+training score:0.552952969866
+cv score of current parameter: 0.550405150764
+training score:0.584371706483
+cv score of current parameter: 0.565963882065
+training score:0.563378805122
+cv score of current parameter: 0.557523775353
+training score:0.619870767203
+cv score of current parameter: 0.51745149933
+training score:0.611588368501
+cv score of current parameter: 0.549927240761
+training score:0.600556626363
+cv score of current parameter: 0.560704535202
+training score:0.588248337973
+cv score of current parameter: 0.564863974815
+training score:0.584964588354
+cv score of current parameter: 0.565886365031
+training score:0.581118425127
+cv score of current parameter: 0.565709483599
+training score:0.598070609696
+cv score of current parameter: 0.56216549681
+training score:0.573860436481
+cv score of current parameter: 0.563141128875
+training score:0.603934420858
+cv score of current parameter: 0.557782828075
+training score:0.615377203003
+cv score of current parameter: 0.543139539023
+training score:0.590888705187
+cv score of current parameter: 0.564302612914
+training score:0.583995631692
+cv score of current parameter: 0.565967126629
+training score:0.613266737501
+cv score of current parameter: 0.547559301137
+training score:0.608858491741
+cv score of current parameter: 0.552940720146
+training score:0.560875113836
+cv score of current parameter: 0.555922779664
+training score:0.578267525931
+cv score of current parameter: 0.565014869206
+training score:0.597994945343
+cv score of current parameter: 0.562198032723
+training score:0.571131193761
+cv score of current parameter: 0.56179746469
+training score:0.616597257415
+cv score of current parameter: 0.539663513819
+training score:0.604978978934
+cv score of current parameter: 0.556634848029
+training score:0.594160306679
+cv score of current parameter: 0.563359416337
+training score:0.552789294002
+cv score of current parameter: 0.55028336146
+training score:0.584427459452
+cv score of current parameter: 0.565961355884
+training score:0.609342072469
+cv score of current parameter: 0.552496196897
+training score:0.579124023165
+cv score of current parameter: 0.565309962632
+training score:0.617647762688
+cv score of current parameter: 0.535381282449
+training score:0.61987649902
+cv score of current parameter: 0.516034630619
+training score:0.600536179165
+cv score of current parameter: 0.560719423796
+training score:0.615619919662
+cv score of current parameter: 0.542406470619
+training score:0.565181424134
+cv score of current parameter: 0.558657900109
+training score:0.619556727191
+cv score of current parameter: 0.524397711964
+training score:0.619819513691
+cv score of current parameter: 0.519272332476
+training score:0.587071428301
+cv score of current parameter: 0.565167031404
+training score:0.574836463072
+cv score of current parameter: 0.56359735957
+training score:0.613887646995
+cv score of current parameter: 0.546535796799
+training score:0.558439832344
+cv score of current parameter: 0.554325998781
+training score:0.618256126951
+cv score of current parameter: 0.532760600797
+training score:0.610868535614
+cv score of current parameter: 0.550933638143
+training score:0.619132022566
+cv score of current parameter: 0.528034672444
+training score:0.592785975493
+cv score of current parameter: 0.563828695612
+training score:0.60730655981
+cv score of current parameter: 0.554400257715
+training score:0.583250407393
+cv score of current parameter: 0.565928132824
+training score:0.603345640816
+cv score of current parameter: 0.558369264816
+training score:0.617026988035
+cv score of current parameter: 0.537822418205
+training score:0.59638503798
+cv score of current parameter: 0.562752589056
+training score:0.619874323961
+cv score of current parameter: 0.516868899692
+training score:0.588910591299
+cv score of current parameter: 0.564722143479
+training score:0.599927935814
+cv score of current parameter: 0.561161084389
+training score:0.567603412624
+cv score of current parameter: 0.560047663583
+training score:0.580807157081
+cv score of current parameter: 0.565668368679
+training score:0.586063695677
+cv score of current parameter: 0.56559432719
+training score:0.572724495876
+cv score of current parameter: 0.562564108301
+training score:0.551952523341
+cv score of current parameter: 0.549693758392
+training score:0.612580974859
+cv score of current parameter: 0.548499184726
+training score:0.618744835718
+cv score of current parameter: 0.53042217041
+training score:0.6157909801
+cv score of current parameter: 0.541885406205
+training score:0.619775716322
+cv score of current parameter: 0.520735840883
+training score:0.605122954305
+cv score of current parameter: 0.556465632066
+training score:0.608440305363
+cv score of current parameter: 0.553351440424
+training score:0.619862885833
+cv score of current parameter: 0.517433937734
+training score:0.576088144834
+cv score of current parameter: 0.56413048926
+training score:0.583955015159
+cv score of current parameter: 0.565966518542
+training score:0.557905185364
+cv score of current parameter: 0.553968219278
+training score:0.602483183034
+cv score of current parameter: 0.559193212003
+training score:0.592240596223
+cv score of current parameter: 0.563973337797
+training score:0.614575403548
+cv score of current parameter: 0.545145953208
+training score:0.578858078773
+cv score of current parameter: 0.565242205818
+training score:0.564155988254
+cv score of current parameter: 0.558021367438
+training score:0.570607921942
+cv score of current parameter: 0.561558494357
+training score:0.585479785585
+cv score of current parameter: 0.565768521728
+training score:0.619213588352
+cv score of current parameter: 0.527430207916
+training score:0.598083696365
+cv score of current parameter: 0.562159861551
+training score:0.619560788173
+cv score of current parameter: 0.524352503708
+training score:0.58283488096
+cv score of current parameter: 0.565900293884
+training score:0.611428930462
+cv score of current parameter: 0.550169019414
+training score:0.551581140209
+cv score of current parameter: 0.549426187046
+training score:0.616092555364
+cv score of current parameter: 0.54092272075
+training score:0.589585155041
+cv score of current parameter: 0.564576345903
+training score:0.616992760071
+cv score of current parameter: 0.537964206439
+training score:0.59448219966
+cv score of current parameter: 0.563266320957
+training score:0.605966650557
+cv score of current parameter: 0.555602319862
+training score:0.619840254813
+cv score of current parameter: 0.518420563906
+training score:0.617914150553
+cv score of current parameter: 0.534287303654
+training score:0.576922890148
+cv score of current parameter: 0.564489421006
+training score:0.583312847425
+cv score of current parameter: 0.565931959276
+training score:0.586207694118
+cv score of current parameter: 0.565559575621
+training score:0.599855365671
+cv score of current parameter: 0.561210674822
+training score:0.579921737918
+cv score of current parameter: 0.565503601052
+training score:0.56733447503
+cv score of current parameter: 0.559894514178
+training score:0.60204139603
+cv score of current parameter: 0.559568324587
+training score:0.572474630357
+cv score of current parameter: 0.562435047121
+training score:0.587944765034
+cv score of current parameter: 0.564931228001
+training score:0.556013360657
+cv score of current parameter: 0.552623873024
+training score:0.560294009865
+cv score of current parameter: 0.555552007381
+training score:0.595578194027
+cv score of current parameter: 0.562956882428
+training score:0.575033411419
+cv score of current parameter: 0.563677899404
+training score:0.61395794663
+cv score of current parameter: 0.546404755611
+training score:0.604890503595
+cv score of current parameter: 0.556738071429
+training score:0.581466386394
+cv score of current parameter: 0.565760494417
+training score:0.609444809403
+cv score of current parameter: 0.552395809504
+training score:0.592083743218
+cv score of current parameter: 0.564010962628
+training score:0.597531397107
+cv score of current parameter: 0.562376564136
+training score:0.586129245142
+cv score of current parameter: 0.565574169747
+training score:0.584021649877
+cv score of current parameter: 0.565967443129
+training score:0.568845091409
+cv score of current parameter: 0.560705028309
+training score:0.603739438045
+cv score of current parameter: 0.557971218229
+training score:0.606934584742
+cv score of current parameter: 0.554715597158
+training score:0.551565022104
+cv score of current parameter: 0.549412743699
+training score:0.563808625811
+cv score of current parameter: 0.557800986454
+training score:0.578237311795
+cv score of current parameter: 0.565002441277
+training score:0.610640179228
+cv score of current parameter: 0.551213541924
+training score:0.612865368827
+cv score of current parameter: 0.548121721773
+training score:0.584928912245
+cv score of current parameter: 0.565893225616
+training score:0.60062926369
+cv score of current parameter: 0.56065074761
+training score:0.573075624463
+cv score of current parameter: 0.562749929009
+training score:0.588160446931
+cv score of current parameter: 0.564883153515
+training score:0.582319161262
+cv score of current parameter: 0.565863035866
+training score:0.61519912232
+cv score of current parameter: 0.543634820338
+training score:0.557151539582
+cv score of current parameter: 0.553438544315
+training score:0.596102722912
+cv score of current parameter: 0.562825929846
+training score:0.592587235087
+cv score of current parameter: 0.563887354483
+training score:0.608043497908
+cv score of current parameter: 0.553726680478
+training score:0.576498107127
+cv score of current parameter: 0.564311555873
+training score:0.566143031222
+cv score of current parameter: 0.559212619332
+training score:0.619873659276
+cv score of current parameter: 0.517052560082
+training score:0.603517305085
+cv score of current parameter: 0.558191465047
+training score:0.618386446532
+cv score of current parameter: 0.532161274326
+training score:0.580206815908
+cv score of current parameter: 0.565564649707
+training score:0.619731856565
+cv score of current parameter: 0.521909488922
+training score:0.598876017537
+cv score of current parameter: 0.561801813582
+training score:0.584242788117
+cv score of current parameter: 0.565968122795
+training score:0.593415630813
+cv score of current parameter: 0.563619592415
+training score:0.570535921746
+cv score of current parameter: 0.561523661042
+training score:0.617294726605
+cv score of current parameter: 0.536641341344
+training score:0.587050160681
+cv score of current parameter: 0.56517726398
+training score:0.56243479115
+cv score of current parameter: 0.556945941862
+training score:0.577397270383
+cv score of current parameter: 0.564672642051
+training score:0.613910010085
+cv score of current parameter: 0.546493922121
+training score:0.606226826236
+cv score of current parameter: 0.555355430885
+cv score of best parameters:
+training score:0.58411540596
+cv score of current parameter: 0.565968180682
