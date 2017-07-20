@@ -26,8 +26,6 @@ def load_data(train_name,test_name):
     test_name = upper_dir+test_name
     train_df = pd.read_csv(train_name)
     test_df = pd.read_csv(test_name)
-    #train_df = pd.read_csv('../input/train_pca.csv')
-    #test_df = pd.read_csv('../input/test_pca.csv')
     train_y = train_df['y']
     train_X = train_df.drop('y',axis=1)
     return train_X.values,train_y.values,test_df.values
@@ -110,7 +108,6 @@ class hyperopt_opt():
         kf = KFold(n_splits = 5)
         errors = []
         r2 = []
-     
         model = self.construct_model(param)
         # to enhance the robust of local cv score ,we should repeat this cv process many times
         for train_ind,test_ind in kf.split(train_X):
@@ -123,42 +120,9 @@ class hyperopt_opt():
         model.fit(train_X,train_y)
         pred_train = model.predict(train_X)
         self.log.add('training score:'+str(r2_score(train_y,pred_train)))
-        print('r2 score :')
-        print(np.mean(r2))
         self.log.add('cv score of current parameter: '+str(np.mean(r2)))
+        print('cv score of current para '+str(np.mean(r2)))
         return {'loss':np.mean(errors),'status': STATUS_OK}
-            
-    # use the sklearn version of xgboost
-    #def hyperopt_obj(self,param):
-    #    # 5-fold crossvalidation error
-    #    #ret = xgb.cv(param,dtrain,num_boost_round=param['num_round'])
-    #    train_X = self.train_X
-    #    train_y = self.train_y
-    #    kf = KFold(n_splits = 3)
-    #    errors = []
-    #    r2 = []
-    #    int_params = ['max_depth','num_round']
-    #    for item in int_params:
-    #        param[item] = int(param[item])
-    #    self.log.add(param,1)
-    #    for train_ind,test_ind in kf.split(train_X):
-    #        train_valid_x,train_valid_y = train_X[train_ind],train_y[train_ind]
-    #        test_valid_x,test_valid_y = train_X[test_ind],train_y[test_ind]
-    #        dtrain = xgb.DMatrix(train_valid_x,label = train_valid_y)
-    #        dtest = xgb.DMatrix(test_valid_x)
-    #        pred_model = xgb.train(param,dtrain,num_boost_round=int(param['num_round']))
-    #        pred_test = pred_model.predict(dtest)
-    #        errors.append(mean_squared_error(test_valid_y,pred_test))
-    #        r2.append(r2_score(test_valid_y,pred_test))
-    #        
-    #    pred_model.fit(train_X,train_y)
-    #    pred_train = model.predict(train_X)
-
-    #    self.log.add('training score:'+str(r2_score(train_y,pred_train)))
-    #    self.log.add('cv score of current parameter: '+str(np.mean(r2)))
-    #    print(np.mean(r2))
-    #    print('\n')
-    #    return {'loss':np.mean(errors),'status': STATUS_OK}
             
         
         
@@ -166,21 +130,12 @@ class hyperopt_opt():
     def generate_prediction(self,model):
         model_name = self.model_name
         test_X = self.test_X
-        if model_name == 'xgb':
-            dtest = xgb.DMatrix(test_X)
-            pred_test = model.predict(dtest)
-            sample_df = pd.read_csv('../input/sample_submission.csv')
-            test_id = sample_df['ID']
-            sub_df = pd.DataFrame({'ID':test_id,'y':pred_test})
-            cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-            sub_df.to_csv('../submissions/hyperopt_xgb_'+cur_time+'.csv',index=False)
-        else:
-            pred_test = model.predict(test_X)
-            sample_df = pd.read_csv('../input/sample_submission.csv')
-            test_id = sample_df['ID']
-            sub_df = pd.DataFrame({'ID':test_id,'y':pred_test})
-            cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-            sub_df.to_csv('../submissions/hyperopt_skl_'+model_name+'_'+cur_time+'.csv',index=False)  
+        pred_test = model.predict(test_X)
+        sample_df = pd.read_csv('../input/sample_submission.csv')
+        test_id = sample_df['ID']
+        sub_df = pd.DataFrame({'ID':test_id,'y':pred_test})
+        cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
+        sub_df.to_csv('../submissions/hyperopt_skl_'+model_name+'_'+cur_time+'.csv',index=False)  
             
     def main_tunning(self):
         model_name = self.model_name
@@ -189,102 +144,40 @@ class hyperopt_opt():
         test_X = self.test_X
     
         trials = Trials()
-        if model_name=='xgb':
-            obj = lambda p:self.hyperopt_obj(p)
-            best_params = fmin(obj,param_xgb_space,algo=tpe.suggest,max_evals=param_xgb_space['max_evals'],trials = trials)
-            self.log.add(best_params,1)
+        int_params = []
+        obj = lambda p:self.hyperopt_skl_obj(p)
+        if model_name == 'randomforest':
+            cur_param_space = param_rf_space
+            int_params = ['n_estimators','max_depth','min_samples_split','min_samples_leaf']
+        elif model_name =='gbregressor':
+            cur_param_space = param_gdr_space
+            int_params = ['n_estimators','max_depth','min_samples_split','min_samples_leaf']
+        elif model_name =='xgbregressor':
+            cur_param_space = param_xgb_space
             int_params = ['max_depth','num_round']
-            for item in int_params:
-                best_params[item] = int(best_params[item])
-            
-            #test the cv score  of this best_params 
-            print('cv score of best parameter: ')
-            self.log.add("cv score of best parameters:")
+        elif model_name == 'lasso':
+            cur_param_space = param_lasso_space
+        elif model_name =='ridge':
+            cur_param_space = param_ridge_space
+        elif model_name == 'svr':
+            cur_param_space = param_svr_space
+            int_params = ['degree']
 
-            self.hyperopt_obj(best_params)
-            dtrain = xgb.DMatrix(train_X,label= train_y)
-        
-            trained_model = xgb.train(best_params,dtrain,num_boost_round=int(best_params['num_round']))
+        best_params = fmin(obj,cur_param_space,algo=tpe.suggest,max_evals=param_rf_space['max_evals'],trials=trials)
+        for item in int_params:
+            best_params[item] = int(best_params[item])
+        print('cv score of best paramster: ')
+        self.log.add("cv score of best parameters:")
+        self.hyperopt_skl_obj(best_params)
+        model =self.construct_model(best_params,1)
+        model.fit(train_X,train_y)
+        if self.save_model:
             cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-            save2model = '../models/xgb_'+cur_time
-            pickle.dump(trained_model,open(save2model,'wb'))
-            self.generate_prediction(trained_model)
-        #elif model_name ==
-        else:
-
-            int_params = []
-            obj = lambda p:self.hyperopt_skl_obj(p)
-            if model_name == 'randomforest':
-                cur_param_space = param_rf_space
-                int_params = ['n_estimators','max_depth','min_samples_split','min_samples_leaf']
-            elif model_name =='gbregressor':
-                cur_param_space = param_gdr_space
-                int_params = ['n_estimators','max_depth','min_samples_split','min_samples_leaf']
-            elif model_name =='xgbregressor':
-                cur_param_space = param_xgb_space
-                int_params = ['max_depth','num_round']
-            elif model_name == 'lasso':
-                cur_param_space = param_lasso_space
-            elif model_name =='ridge':
-                cur_param_space = param_ridge_space
-            elif model_name == 'svr':
-                cur_param_space = param_svr_space
-                int_params = ['degree']
-
-            best_params = fmin(obj,cur_param_space,algo=tpe.suggest,max_evals=param_rf_space['max_evals'],trials=trials)
-            for item in int_params:
-                best_params[item] = int(best_params[item])
-            print('cv score of best paramster: ')
-            self.log.add("cv score of best parameters:")
-            self.hyperopt_skl_obj(best_params)
-
-            '''if model_name == 'randomforest':
-                model = RandomForestRegressor(
-                            n_estimators = best_params['n_estimators'],
-                            max_depth = best_params['max_depth'],
-                            min_samples_split=best_params['min_samples_split'],
-                            min_samples_leaf = best_params['min_samples_leaf']) 
-            elif model_name == 'gbregressor':
-                model = GradientBoostingRegressor(
-                            learning_rate = best_params['learning_rate'],
-                            n_estimators = best_params['n_estimators'],
-                            subsample = best_params['subsample'],
-                            max_depth = best_params['max_depth'],
-                            min_samples_split = best_params['min_samples_split'],
-                            min_samples_leaf = best_params['min_samples_leaf'])
-            elif model_name == 'xgbregressor':
-                model = XGBRegressor(
-                          n_estimators = best_params['num_round'],
-                          objective = param_xgb_space['objective'],
-                          learning_rate = best_params['eta'],
-                          gamma = best_params['gamma'],
-                          min_child_weight = best_params['min_child_weight'],
-                          max_depth = best_params['max_depth'],
-                          subsample = best_params['subsample'],
-                          colsample_bytree = best_params['colsample_bytree'],
-                          seed = param_xgb_space['seed'],
-                          nthread= param_xgb_space['nthread']) 
-            elif model_name == 'lasso':
-                model = Lasso(alpha = best_params['alpha'],random_state = param_lasso_space['random_state'])
-            elif model_name == 'ridge':
-                model = Ridge(alpha = best_params['alpha'],random_state = param_ridge_space['random_state'])
-            elif model_name =='svr':
-                kernel_ind = best_params['kernel']
-                if kernel_ind == 0:
-                    cur_kernel = "rbf"
-                else:
-                    cur_kernel = 'poly'
-                model = SVR(C = best_params['C'],gamma = best_params['gamma'],degree = best_params['degree'],epsilon = best_params['epsilon'],kernel = cur_kernel)
-            '''
-            model =self.construct_model(best_params,1)
-            model.fit(train_X,train_y)
-            if self.save_model:
-                cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-                save2model = '../models/'+model_name+'_'+cur_time
-                pickle.dump(model,open(save2model,'wb'))
-            if self.gen_pred:
-                self.generate_prediction(model)
-            return model
+            save2model = '../models/'+model_name+'_'+cur_time
+            pickle.dump(model,open(save2model,'wb'))
+        if self.gen_pred:
+            self.generate_prediction(model)
+        return model
     
     
 

@@ -10,7 +10,7 @@
  2. autoGridSearch.py
  采用暴力搜索的方式搜索最优超参数
  3. entrance.py
- 类似于接口脚本，避免反复在命令行中输入参数的烦恼
+ 类似于接口脚本，避免反复在命令行中输入参数的烦恼，可以一键运行
  4. hyperopt_models.py
  模型调参的主脚本，包含了各个模型，把需要训练的模型名当作参数传到hyperopt_models中
  5. log_class.py
