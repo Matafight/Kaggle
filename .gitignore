@@ -11,3 +11,4 @@ test/
 .idea/
 _pycache/
 *.un~
+*.pyc
