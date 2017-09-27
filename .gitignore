@@ -9,6 +9,7 @@ other_codes/
 submissions/*
 test/
 .idea/
-_pycache/
-*.un~
+_pycache_/
+log/
 *.pyc
+*.un~

@@ -11,6 +11,8 @@ from sklearn.metrics import r2_score,mean_squared_error
 import time
 from hyperopt import fmin,hp,tpe,STATUS_OK,Trials,space_eval
 from hyperopt_models import hyperopt_opt
+import argparse
+import os
 
 xgb_min_num_round = 10
 xgb_max_num_round = 80
@@ -41,30 +43,27 @@ class ensemble():
     train_firlayer = None
     test_firlayer = None
     
-    def __init__(self):
+    def __init__(self,train_name,test_name):
         self.NFOLDS = 3
         self.SEED = 10
-        self.train_X,self.train_y,self.test_X = self.load_data()
+        self.train_X,self.train_y,self.test_X = self.load_data(train_name,test_name)
         self.load_models()
         print('initialization...')
 
-    def load_data(self):
-        train_df = pd.read_csv('../input/processed_train.csv')
-        test_df = pd.read_csv('../input/processed_test.csv')
+    def load_data(self,train_name,test_name):
+        train_df = pd.read_csv('../input/'+train_name)
+        test_df = pd.read_csv('../input/'+test_name)
         print('loading data...')
-        #train_df = pd.read_csv('../input/train_pca.csv')
-        #test_df = pd.read_csv('../input/test_pca.csv')
         train_y = train_df['y']
         train_X = train_df.drop('y',axis=1)
         return train_X.values,train_y.values,test_df.values
 
     def load_models(self):
-        model_names = ['ridge_2017-06-30-14-25']
+        #get all the models under ../models/
+        model_names = os.listdir('../models/')
         for item in model_names:
             print('../models/'+item)
             print(type('../models/'+item).__name__)
-            #fname = ()
-
             model = pickle.load(open('../models/'+item,'rb'))
             self.models.append(model)
 
@@ -126,6 +125,7 @@ class ensemble():
         cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
         df_sub = pd.DataFrame({'ID': test_ids, 'y': preds})
         df_sub.to_csv('../submissions/stacking_'+cur_time+'.csv',index=False)
+
     def hyperopt_obj(self,param,train_X,train_y):
         # 5-fold crossvalidation error
         #ret = xgb.cv(param,dtrain,num_boost_round=param['num_round'])
@@ -194,9 +194,16 @@ class ensemble():
         self.generate_submission(final_model,test_X)
        
 
-
+def config_parser():
+    parser =argparse.ArgumentParser()
+    parser.add_argument('-train_name',action = 'store',dest = 'train_name',help='enter the training dataname',type=str)
+    parser.add_argument('-test_name',action = 'store',dest='test_name',help = 'enter the testing dataname',type = str)
+    configs = parser.parse_args()
+    return configs
 
 if __name__ == '__main__':
-    ens_model = ensemble()
+
+    config = config_parser()
+    ens_model = ensemble(config.train_name,config.test_name)
     ens_model.final_lay()
 
