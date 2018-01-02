@@ -3,7 +3,7 @@
 ./SFCrime/data/*
 ./Face/data/*
 .ipynb_checkpoints/
-input/*
+input/
 models/*
 other_codes/
 submissions/*
