@@ -7,7 +7,7 @@ import numpy as np
 
 
 
-class learning_methods:
+class learning_methods(object):
     def __init__(self,x,y,metric):
         self.x = x
         self.y = y
@@ -23,7 +23,7 @@ class learning_methods:
             test_valid_x,test_valid_y = self.x[test_ind],self.y[test_ind]
             self.model.fit(train_valid_x,train_valid_y)
             pred_test = self.model.predict(test_valid_x)
-            score.append(self.metric(test_valid_y,pred_test))
+            score.append(self.metric(test_valid_y,pred_test,labels=[0,1]))
         print('final {} on cv {}'.format(self.metric.__name__,np.mean(score)))
     
     #scoring : neg_mean_squared_error 

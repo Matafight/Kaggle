@@ -4,7 +4,7 @@ sys.path.append('..')
 #sys.path.append('../kaggle_methods')
 from dm_methods.kaggle_methods.ridge import ridge_cv
 from dm_methods.kaggle_methods.xgboost_classification import xgboost_classification_cv
-
+from dm_methods.kaggle_methods.logistic_regression import LogisticRegression_CV
 #from ridge import ridge_cv
 from sklearn import metrics
 
@@ -63,21 +63,21 @@ pca_transformed = pca.transform(tfidf_vector)
 training = pca_transformed[:df_train.shape[0],:]
 testing = pca_transformed[df_train.shape[0]:,:]
 
-#submissions = pd.DataFrame({'id':df_test['id']})
-#metric = metrics.mean_squared_error
-#scoring = 'neg_mean_squared_error'
-#for cur_label in label_name:
-#    label = train_label[cur_label]
-#    with Timer() as t:
-#        ridge_cls = ridge_cv(training,label,metric)
-#        ridge_model = ridge_cls.cross_validation(scoring =scoring) 
-#        prediction = ridge_model.predict(testing)
-#        submissions[cur_label] = prediction
-#    print('time interval for one class is {}'.format(t.interval))
-#
-#submissions.to_csv('submission_ridge.csv',index=False)
+'''submissions = pd.DataFrame({'id':df_test['id']})
+metric = metrics.mean_squared_error
+scoring = 'neg_mean_squared_error'
+for cur_label in label_name:
+    label = train_label[cur_label]
+    with Timer() as t:
+        ridge_cls = ridge_cv(training,label,metric)
+        ridge_model = ridge_cls.cross_validation(scoring =scoring) 
+        prediction = ridge_model.predict(testing)
+        submissions[cur_label] = prediction
+    print('time interval for one class is {}'.format(t.interval))
 
-submissions = pd.DataFrame({'id':df_test['id']})
+submissions.to_csv('submission_ridge.csv',index=False)'''
+
+'''submissions = pd.DataFrame({'id':df_test['id']})
 metric = metrics.log_loss
 scoring = 'neg_log_loss'
 for cur_label in label_name:
@@ -89,4 +89,18 @@ for cur_label in label_name:
         submissions[cur_label] = prediction
     print('time interval for one class is {}'.format(t.interval))
 
-submissions.to_csv('submission_xgboost.csv',index=False)
+submissions.to_csv('submission_xgboost.csv',index=False)'''
+
+submissions = pd.DataFrame({'id':df_test['id']})
+metric = metrics.log_loss
+scoring = 'neg_log_loss'
+for cur_label in label_name:
+    label = train_label[cur_label]
+    with Timer() as t:
+        lr_cls = LogisticRegression_CV(training,label,metric)
+        lr_model = lr_cls.cross_validation(scoring =scoring) 
+        prediction = lr_model.predict(testing)
+        submissions[cur_label] = prediction
+    print('time interval for one class is {}'.format(t.interval))
+
+submissions.to_csv('submission_lr.csv',index=False)
