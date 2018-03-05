@@ -14,7 +14,10 @@ from scipy.sparse import csr_matrix
 from sklearn.preprocessing import MinMaxScaler
 import gc
 from contextlib import contextmanager
+import string
+from scipy.sparse import hstack 
 
+from sklearn.feature_extraction.text import TfidfVectorizer
 class Timer:    
     def __enter__(self):
         self.start = time.clock()
@@ -36,7 +39,7 @@ def timer(name):
     """
     t0 = time.time()
     yield
-    print(f'[{name}] done in {time.time() - t0:.0f} s')
+    print(name+' done in {} s'.format(time.time()-t0))
 
 
 #处理数据
@@ -47,13 +50,13 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 df_train = pd.read_csv('./input/train.csv').fillna(" ")
 df_test = pd.read_csv('./input/test.csv').fillna(" ")
 
-#df_train = df_train.loc[:500,:]
-#df_test = df_test.loc[:500,:]
+df_train = df_train.loc[:5000,:]
+df_test = df_test.loc[:5000,:]
 
 
 label_name = ['toxic','severe_toxic','obscene','threat','insult','identity_hate']
 train_label = df_train[label_name]
-df_all = pd.concat([df_train[['id','comment_text']],df_test],axis=0)
+#df_all = pd.concat([df_train[['id','comment_text']],df_test],axis=0)
 
 #add on 2018/3/5
 # Contraction replacement patterns
@@ -75,7 +78,7 @@ def prepare_for_char_n_gram(text):
     """ Simple text clean up process"""
     # 1. Go to lower case (only good for english)
     # Go to bytes_strings as I had issues removing all \n in r""
-
+    clean = text
     # 2. Drop \n and  \t
     clean = clean.replace("\n", " ")
     clean = clean.replace("\t", " ")
@@ -86,7 +89,7 @@ def prepare_for_char_n_gram(text):
         clean = re.sub(pattern, repl, clean)
     # 4. Drop puntuation
     # I could have used regex package with regex.sub(b"\p{P}", " ")
-    exclude = re.compile('[%s]' % re.escape(bytes(string.punctuation, encoding='utf-8')))
+    exclude = re.compile('[%s]' % re.escape(string.punctuation))
     clean = " ".join([exclude.sub('', token) for token in clean.split()])
     # 5. Drop numbers - as a scientist I don't think numbers are toxic ;-)
     clean = re.sub("\d+", " ", clean)
@@ -105,7 +108,14 @@ def prepare_for_char_n_gram(text):
 def count_regexp_occ(regexp="", text=None):
     """ Simple way to get the number of occurence of a regex"""
     return len(re.findall(regexp, text))
-
+def char_analyzer(text):
+    """
+    This is used to split strings in small lots
+    I saw this in an article (I can't find the link anymore)
+    so <talk> and <talking> would have <Tal> <alk> in common
+    """
+    tokens = text.split()
+    return [token[i: i + 3] for token in tokens for i in range(len(token) - 2)]
 def get_indicators_and_clean_comments(df):
     """
     Check all sorts of content as it may help find toxic comment
@@ -160,18 +170,87 @@ def get_indicators_and_clean_comments(df):
     df["clean_chars_ratio"] = df["clean_comment"].apply(lambda x: len(set(x))) / df["clean_comment"].apply(
         lambda x: 1 + min(99, len(x)))
 
-get_indicators_and_clean_comments(train)
-get_indicators_and_clean_comments(test)
+get_indicators_and_clean_comments(df_train)
+get_indicators_and_clean_comments(df_test)
 
 with timer("Creating numerical features"):
-        num_features = [f_ for f_ in train.columns
+        num_features = [f_ for f_ in df_train.columns
                         if f_ not in ["comment_text", "clean_comment", "id", "remaining_chars",
-                                      'has_ip_address'] + class_names]
+                                      'has_ip_address'] + label_name]
 
         skl = MinMaxScaler()
-        train_num_features = csr_matrix(skl.fit_transform(train[num_features]))
-        test_num_features = csr_matrix(skl.fit_transform(test[num_features]))
-        
+        train_num_features = csr_matrix(skl.fit_transform(df_train[num_features]))
+        test_num_features = csr_matrix(skl.fit_transform(df_test[num_features]))
+
+# Get TF-IDF features
+train_text = df_train['clean_comment']
+test_text = df_test['clean_comment']
+all_text = pd.concat([train_text, test_text])
+# First on real words
+with timer("Tfidf on word"):
+    word_vectorizer = TfidfVectorizer(
+        sublinear_tf=True,
+        strip_accents='unicode',
+        analyzer='word',
+        token_pattern=r'\w{1,}',
+        stop_words='english',
+        ngram_range=(1, 2),
+        max_features=20000)
+    word_vectorizer.fit(all_text)
+    train_word_features = word_vectorizer.transform(train_text)
+    test_word_features = word_vectorizer.transform(test_text)
+del word_vectorizer
+gc.collect()
+
+with timer("Tfidf on char n_gram"):
+        char_vectorizer = TfidfVectorizer(
+            sublinear_tf=True,
+            strip_accents='unicode',
+            tokenizer=char_analyzer,
+            analyzer='word',
+            ngram_range=(1, 1),
+            max_features=50000)
+        char_vectorizer.fit(all_text)
+        train_char_features = char_vectorizer.transform(train_text)
+        test_char_features = char_vectorizer.transform(test_text)
+
+del char_vectorizer
+gc.collect()
+print((train_char_features > 0).sum(axis=1).max())
+del train_text
+del test_text
+gc.collect()
+
+ # Now stack TF IDF matrices
+with timer("Staking matrices"):
+    csr_trn = hstack(
+        [
+            train_char_features,
+            train_word_features,
+            train_num_features
+        ]
+    ).tocsr()
+    # del train_word_features
+    del train_num_features
+    del train_char_features
+    gc.collect()
+    csr_sub = hstack(
+        [
+            test_char_features,
+            test_word_features,
+            test_num_features
+        ]
+    ).tocsr()
+    # del test_word_features
+    del test_num_features
+    del test_char_features
+    gc.collect()
+submissions = pd.DataFrame.from_dict({'id': df_test['id']})
+del df_test
+gc.collect()
+# now the training data 
+training = csr_trn
+testing = csr_sub
 '''
 # these features are not good enough 
 import re
@@ -230,11 +309,10 @@ for cur_label in label_name:
 
 submissions.to_csv('submission_xgboost.csv',index=False)'''
 
-submissions = pd.DataFrame({'id':df_test['id']})
 metric = metrics.log_loss
 scoring = 'roc_auc'
 for cur_label in label_name:
-    label = train_label[cur_label]
+    label = df_train[cur_label]
     with Timer() as t:
         lr_cls = LogisticRegression_CV(training,label,metric)
         lr_model = lr_cls.cross_validation(scoring =scoring) 
