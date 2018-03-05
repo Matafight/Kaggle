@@ -13,6 +13,7 @@ import time
 from scipy.sparse import csr_matrix
 from sklearn.preprocessing import MinMaxScaler
 import gc
+from contextlib import contextmanager
 
 class Timer:    
     def __enter__(self):
@@ -22,6 +23,21 @@ class Timer:
     def __exit__(self, *args):
         self.end = time.clock()
         self.interval = self.end - self.start
+
+
+
+
+@contextmanager
+def timer(name):
+    """
+    Taken from Konstantin Lopuhin https://www.kaggle.com/lopuhin
+    in script named : Mercari Golf: 0.3875 CV in 75 LOC, 1900 s
+    https://www.kaggle.com/lopuhin/mercari-golf-0-3875-cv-in-75-loc-1900-s
+    """
+    t0 = time.time()
+    yield
+    print(f'[{name}] done in {time.time() - t0:.0f} s')
+
 
 #处理数据
 import numpy as np # linear algebra
@@ -147,6 +163,15 @@ def get_indicators_and_clean_comments(df):
 get_indicators_and_clean_comments(train)
 get_indicators_and_clean_comments(test)
 
+with timer("Creating numerical features"):
+        num_features = [f_ for f_ in train.columns
+                        if f_ not in ["comment_text", "clean_comment", "id", "remaining_chars",
+                                      'has_ip_address'] + class_names]
+
+        skl = MinMaxScaler()
+        train_num_features = csr_matrix(skl.fit_transform(train[num_features]))
+        test_num_features = csr_matrix(skl.fit_transform(test[num_features]))
+        
 '''
 # these features are not good enough 
 import re
