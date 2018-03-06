@@ -1,10 +1,11 @@
 #_*_coding:utf-8_*_
 
 #这是一个基类，继承该类的子类可以直接使用基类的函数也可以重写基类的函数，xgboost方法就应该重写，sklearn内嵌的方法应该可以直接使用。cv_score 应该支持引入评估准则参数
+#将验证集上的结果存到log中去
 from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
 import numpy as np
-
+from . import log_class
 
 
 class learning_methods(object):
@@ -13,6 +14,7 @@ class learning_methods(object):
         self.y = y
         self.metric = metric
         self.model = None
+        
 
     def cv_score(self):
         # 5-fold crossvalidation error

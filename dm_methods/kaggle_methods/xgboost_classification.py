@@ -14,11 +14,18 @@ from sklearn import metrics
 import time
 
 #parameters to be tunned
-tunned_max_depth = [3,5,7,9]
-tunned_learning_rate =[0.01,0.015,0.025,0.05,0.1]  # aka eta in xgboost
-tunned_min_child_weight = [1,3,5,7]
-tunned_gamma = [0.05,0.1,0.3,0.5,0.7,0.9,1]
-tunned_colsample_bytree = [0.6,0.7,0.8,1]
+#tunned_max_depth = [3,5,7,9]
+#tunned_learning_rate =[0.01,0.015,0.025,0.05,0.1]  # aka eta in xgboost
+#tunned_min_child_weight = [1,3,5,7]
+#tunned_gamma = [0.05,0.1,0.3,0.5,0.7,0.9,1]
+#tunned_colsample_bytree = [0.6,0.7,0.8,1]
+
+tunned_max_depth = [3]
+tunned_learning_rate =[0.01,0.015]  # aka eta in xgboost
+tunned_min_child_weight = [1,3]
+tunned_gamma = [0.05]
+tunned_colsample_bytree = [0.6]
+
 
 # 还需要添加subsample,lambda,alpha等参数
 
@@ -43,14 +50,15 @@ class xgboost_classification_cv:
         self.cv_folds = 5
         self.early_stopping_rounds = 50
         self.metric = metric
+        
     
     # get the best numrounds after changing a parameter
     def modelfit(self):
         xgb_param = self.model.get_xgb_params()
         dtrain = xgb.DMatrix(self.x,label = self.y)
-        cvresult = xgb.cv(xgb_param,dtrain,num_boost_round=500,nfold=self.cv_folds,metrics='logloss',early_stopping_rounds=self.early_stopping_rounds)
+        cvresult = xgb.cv(xgb_param,dtrain,num_boost_round=500,nfold=self.cv_folds,metrics='auc',early_stopping_rounds=self.early_stopping_rounds)
         self.model.set_params(n_estimators=cvresult.shape[0])
-        self.model.fit(self.x,self.y,eval_metric= 'logloss')
+        #self.model.fit(self.x,self.y,eval_metric= 'logloss')
 
     def cv_score(self):
         # 5-fold crossvalidation error

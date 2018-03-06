@@ -13,7 +13,7 @@ tunned_C = [0.2,0.5,1,1.5]
 class LogisticRegression_CV(learning_methods_classification.learning_methods):
     def __init__(self,x,y,metric):
         super(LogisticRegression_CV,self).__init__(x,y,metric)
-        self.model = LogisticRegression(C = 1.0)
+        self.model = LogisticRegression(C = 1.0,class_weight='balanced')
 
 
     #scoring:neg_log_loss

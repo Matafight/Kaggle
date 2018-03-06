@@ -6,6 +6,7 @@ from dm_methods.kaggle_methods.ridge import ridge_cv
 from dm_methods.kaggle_methods.xgboost_classification import xgboost_classification_cv
 from dm_methods.kaggle_methods.logistic_regression import LogisticRegression_CV
 from dm_methods.kaggle_methods.svc import SVC_CV
+from dm_methods.kaggle_methods.nb_classification import GaussianNB_CV
 #from ridge import ridge_cv
 from sklearn import metrics
 import re
@@ -50,8 +51,8 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 df_train = pd.read_csv('./input/train.csv').fillna(" ")
 df_test = pd.read_csv('./input/test.csv').fillna(" ")
 
-df_train = df_train.loc[:5000,:]
-df_test = df_test.loc[:5000,:]
+#df_train = df_train.loc[:5000,:]
+#df_test = df_test.loc[:5000,:]
 
 
 label_name = ['toxic','severe_toxic','obscene','threat','insult','identity_hate']
@@ -295,9 +296,9 @@ for cur_label in label_name:
 
 submissions.to_csv('submission_ridge.csv',index=False)'''
 
-'''submissions = pd.DataFrame({'id':df_test['id']})
-metric = metrics.log_loss
-scoring = 'neg_log_loss'
+
+metric = metrics.auc
+scoring = 'roc_auc'
 for cur_label in label_name:
     label = train_label[cur_label]
     with Timer() as t:
@@ -307,21 +308,21 @@ for cur_label in label_name:
         submissions[cur_label] = prediction
     print('time interval for one class is {}'.format(t.interval))
 
-submissions.to_csv('submission_xgboost.csv',index=False)'''
+submissions.to_csv('submission_xgboost.csv',index=False)
 
-metric = metrics.log_loss
-scoring = 'roc_auc'
-for cur_label in label_name:
-    label = df_train[cur_label]
-    with Timer() as t:
-        lr_cls = LogisticRegression_CV(training,label,metric)
-        lr_model = lr_cls.cross_validation(scoring =scoring) 
-        prediction = lr_model.predict_proba(testing)[:,1]
-      
-        submissions[cur_label] = prediction
-    print('time interval for one class is {}'.format(t.interval))
-
-submissions.to_csv('submission_lr_kaggle_method.csv',index=False)
+#metric = metrics.log_loss
+#scoring = 'roc_auc'
+#for cur_label in label_name:
+#    label = df_train[cur_label]
+#    with Timer() as t:
+#        lr_cls = LogisticRegression_CV(training,label,metric)
+#        lr_model = lr_cls.cross_validation(scoring =scoring) 
+#        prediction = lr_model.predict_proba(testing)[:,1]
+#      
+#        submissions[cur_label] = prediction
+#    print('time interval for one class is {}'.format(t.interval))
+#
+#submissions.to_csv('submission_lr_kaggle_method.csv',index=False)
 
 
 '''submissions = pd.DataFrame({'id':df_test['id']})
@@ -338,4 +339,19 @@ for cur_label in label_name:
 
 submissions.to_csv('submission_svc.csv',index=False)'''
 
-
+## naive bayes
+#metric = metrics.log_loss
+#scoring = 'roc_auc'
+#training = training.toarray()
+#testing = testing.toarray()
+#for cur_label in label_name:
+#    label = df_train[cur_label]
+#    with Timer() as t:
+#        nb_cls = GaussianNB_CV(training,label,metric)
+#        nb_model = nb_cls.cross_validation(scoring =scoring) 
+#        prediction = nb_model.predict_proba(testing)[:,1]
+#      
+#        submissions[cur_label] = prediction
+#    print('time interval for one class is {}'.format(t.interval))
+#
+#submissions.to_csv('submission_nb.csv',index=False)
