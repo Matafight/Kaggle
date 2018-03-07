@@ -7,6 +7,7 @@ from dm_methods.kaggle_methods.xgboost_classification import xgboost_classificat
 from dm_methods.kaggle_methods.logistic_regression import LogisticRegression_CV
 from dm_methods.kaggle_methods.svc import SVC_CV
 from dm_methods.kaggle_methods.nb_classification import GaussianNB_CV
+from dm_methods.kaggle_methods.random_forest_classification import RandomForest_CV
 #from ridge import ridge_cv
 from sklearn import metrics
 import re
@@ -51,8 +52,8 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 df_train = pd.read_csv('./input/train.csv').fillna(" ")
 df_test = pd.read_csv('./input/test.csv').fillna(" ")
 
-#df_train = df_train.loc[:5000,:]
-#df_test = df_test.loc[:5000,:]
+#df_train = df_train.loc[:500,:]
+#df_test = df_test.loc[:500,:]
 
 
 label_name = ['toxic','severe_toxic','obscene','threat','insult','identity_hate']
@@ -297,18 +298,18 @@ for cur_label in label_name:
 submissions.to_csv('submission_ridge.csv',index=False)'''
 
 
-metric = metrics.auc
-scoring = 'roc_auc'
-for cur_label in label_name:
-    label = train_label[cur_label]
-    with Timer() as t:
-        xgb_cls = xgboost_classification_cv(training,label,metric)
-        xgb_model = xgb_cls.cross_validation(scoring =scoring) 
-        prediction =xgb_model.predict(testing)
-        submissions[cur_label] = prediction
-    print('time interval for one class is {}'.format(t.interval))
-
-submissions.to_csv('submission_xgboost.csv',index=False)
+#metric = metrics.auc
+#scoring = 'roc_auc'
+#for cur_label in label_name:
+#    label = train_label[cur_label]
+#    with Timer() as t:
+#        xgb_cls = xgboost_classification_cv(training,label,metric)
+#        xgb_model = xgb_cls.cross_validation(scoring =scoring) 
+#        prediction =xgb_model.predict(testing)
+#        submissions[cur_label] = prediction
+#    print('time interval for one class is {}'.format(t.interval))
+#
+#submissions.to_csv('submission_xgboost.csv',index=False)
 
 #metric = metrics.log_loss
 #scoring = 'roc_auc'
@@ -355,3 +356,17 @@ submissions.to_csv('submission_svc.csv',index=False)'''
 #    print('time interval for one class is {}'.format(t.interval))
 #
 #submissions.to_csv('submission_nb.csv',index=False)
+
+metric = metrics.log_loss
+scoring = 'roc_auc'
+for cur_label in label_name:
+    label = df_train[cur_label]
+    with Timer() as t:
+        rf_cls = RandomForest_CV(training,label,metric)
+        rf_model = rf_cls.cross_validation(scoring =scoring) 
+        prediction = rf_model.predict_proba(testing)[:,1]
+      
+        submissions[cur_label] = prediction
+    print('time interval for one class is {}'.format(t.interval))
+
+submissions.to_csv('submission_rf_kaggle_method.csv',index=False)

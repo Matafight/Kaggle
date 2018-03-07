@@ -5,7 +5,7 @@
 from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
 import numpy as np
-from . import log_class
+
 
 
 class learning_methods(object):
@@ -14,7 +14,7 @@ class learning_methods(object):
         self.y = y
         self.metric = metric
         self.model = None
-        
+
 
     def cv_score(self):
         # 5-fold crossvalidation error
@@ -25,9 +25,18 @@ class learning_methods(object):
             test_valid_x,test_valid_y = self.x[test_ind],self.y[test_ind]
             self.model.fit(train_valid_x,train_valid_y)
             pred_test = self.model.predict(test_valid_x)
-            score.append(self.metric(test_valid_y,pred_test,labels=[0,1]))
-        print('final {} on cv {}'.format(self.metric.__name__,np.mean(score)))
-    
+            try:
+                score.append(self.metric(test_valid_y,pred_test))
+            except Exception as e:
+                print(e)
+                score.append(self.metric(test_valid_y,pred_test,labels=[0,1]))
+                
+        ret = 'final {} on cv {}'.format(self.metric.__name__,np.mean(score))
+        return ret
+    def train_score(self):
+        pred = self.model.predict(self.x)
+        ret = 'train {} on train {} '.format(self.metric.__name__,self.metric(self.y,pred))
+        return ret
     #scoring : neg_mean_squared_error 
     def cross_validation(self,scoring):
         pass
