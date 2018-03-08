@@ -16,19 +16,19 @@ tunned_max_features = ['sqrt','log2','auto',None]
 #应该写一个基类，然后继承该基类
 class RandomForestClassification_CV(learning_methods_classification.learning_methods):
     def __init__(self,x,y,metric,scoring = 'neg_log_loss'):
-        super(RandomForest_CV,self).__init__(x,y,metric)
+        super(RandomForestClassification_CV,self).__init__(x,y,metric)
         self.model = RandomForestClassifier()
         self.logger = log_class.log_class('random_forest')
         self.scoring = scoring
 
     
     def cv_score(self):
-        ret = super(RandomForest_CV,self).cv_score()
+        ret = super(RandomForestClassification_CV,self).cv_score()
         print(ret)
         #add logger here
         self.logger.add(ret)
     def train_score(self):
-        ret = super(RandomForest_CV,self).train_score()
+        ret = super(RandomForestClassification_CV,self).train_score()
         print(ret)
         self.logger.add(ret)
 

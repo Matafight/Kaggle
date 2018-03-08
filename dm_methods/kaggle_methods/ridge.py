@@ -9,7 +9,7 @@ tunned_alpha = [0.1,0.3,0.5,1,1.2,1.5,2]
 class ridge_CV(learning_methods_regression.learning_methods):
     #metric is a function parameter
     def __init__(self,x,y,metric,scoring = 'neg_mean_squared_error'):
-        super(ridge_cv,self).__init__(x,y,metric)
+        super(ridge_CV,self).__init__(x,y,metric)
         #normalize 
         self.model = Ridge(alpha=1,normalize=True)
         self.scoring = scoring 

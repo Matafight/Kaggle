@@ -3,11 +3,11 @@ import sys
 sys.path.append('..')
 #sys.path.append('../kaggle_methods')
 from dm_methods.kaggle_methods.ridge import ridge_cv
-from dm_methods.kaggle_methods.xgboost_classification import xgboost_classification_cv
+from dm_methods.kaggle_methods.xgboost_classification import xgboostClassification_CV
 from dm_methods.kaggle_methods.logistic_regression import LogisticRegression_CV
 from dm_methods.kaggle_methods.svc import SVC_CV
 from dm_methods.kaggle_methods.nb_classification import GaussianNB_CV
-from dm_methods.kaggle_methods.random_forest_classification import RandomForest_CV
+from dm_methods.kaggle_methods.random_forest_classification import RandomForestClassification_CV
 #from ridge import ridge_cv
 from sklearn import metrics
 import re

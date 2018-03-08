@@ -25,7 +25,7 @@ tunned_colsample_bytree = [0.6,0.7,0.8,1]
 
 #define a decorator function to record the running time
 
-class xgboost_regression_cv:
+class xgboostRegression_CV:
     def __init__(self,x,y,metrics):
         self.x =  x
         self.y = y
