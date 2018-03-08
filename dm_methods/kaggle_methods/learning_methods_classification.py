@@ -15,6 +15,8 @@ class learning_methods(object):
         self.y = y
         self.metric = metric
         self.model = None
+        
+        
 
 
     def cv_score(self):
