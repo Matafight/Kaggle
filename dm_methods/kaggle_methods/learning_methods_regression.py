@@ -3,6 +3,7 @@
 #这是一个基类，继承该类的子类可以直接使用基类的函数也可以重写基类的函数，xgboost方法就应该重写，sklearn内嵌的方法应该可以直接使用。cv_score 应该支持引入评估准则参数
 from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
+import matplotlib.pyplot as plt
 import numpy as np
 
 

@@ -5,6 +5,7 @@ import sys
 sys.path.append('..')
 from dm_methods.kaggle_methods.lightgbm_regression import lightgbmRegression_CV
 from dm_methods.kaggle_methods.ridge import ridge_CV
+from dm_methods.kaggle_methods.xgboost_regression import xgboostRegression_CV
 from sklearn import metrics
 
 import pandas as pd
@@ -22,7 +23,8 @@ training = df_train.values
 testing = df_test.values
 
 
-method_name = 'lightgbmRegression_CV'
+#method_name = 'lightgbmRegression_CV'
+method_name='xgboostRegression_CV'
 metric = metrics.mean_squared_error
 mcls = eval(method_name)(training,train_label,metric = metric,scoring = 'neg_mean_squared_error')
 lgbmodel = mcls.cross_validation()
@@ -31,7 +33,7 @@ lgbmodel = mcls.cross_validation()
 pred_test = lgbmodel.predict(testing)
 pred_test = np.exp(pred_test)
 submission['SalePrice'] = pred_test
-submission.to_csv('lightgbm.csv',index=False)
+submission.to_csv(method_name+'.csv',index=False)
 
 
 
