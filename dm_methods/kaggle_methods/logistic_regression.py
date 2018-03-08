@@ -11,11 +11,11 @@ tunned_C = [0.2,0.5,1,1.5]
 
 #应该写一个基类，然后继承该基类
 class LogisticRegression_CV(learning_methods_classification.learning_methods):
-    def __init__(self,x,y,metric):
+    def __init__(self,x,y,metric,scoring='auc'):
         super(LogisticRegression_CV,self).__init__(x,y,metric)
         self.model = LogisticRegression(C = 1.0,class_weight='balanced')
         self.logger = log_class.log_class("logistic-regression")
-
+        self.scoring = scoring
     def cv_score(self):
         ret = super(LogisticRegression_CV,self).cv_score()
         print(ret)
@@ -26,7 +26,8 @@ class LogisticRegression_CV(learning_methods_classification.learning_methods):
         print(ret)
         self.logger.add(ret)
     #scoring:neg_log_loss
-    def cross_validation(self,scoring='neg_log_loss'):
+    def cross_validation(self):
+        scoring = self.scoring
         #params = {'C':tunned_C}
         #gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
         #gsearch.fit(self.x,self.y)

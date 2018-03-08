@@ -276,7 +276,8 @@ from lightgbm import LGBMModel
 
 metric = metrics.log_loss
 scoring = 'roc_auc'
-lgb_cls = lightgbm_CV(training.toarray(),df_train['toxic'],metric)
-lgb_model = lgb_cls.cross_validation(scoring)
+metric_name = 'auc'
+lgb_cls = lightgbm_CV(training.toarray(),df_train['toxic'],metric,metric_name=metric_name,scoring = scoring)
+lgb_model = lgb_cls.cross_validation()
 
 

@@ -15,10 +15,11 @@ tunned_max_features = ['sqrt','log2','auto',None]
 
 #应该写一个基类，然后继承该基类
 class RandomForest_CV(learning_methods_classification.learning_methods):
-    def __init__(self,x,y,metric):
+    def __init__(self,x,y,metric,scoring = 'neg_log_loss'):
         super(RandomForest_CV,self).__init__(x,y,metric)
         self.model = RandomForestClassifier()
         self.logger = log_class.log_class('random_forest')
+        self.scoring = scoring
 
     
     def cv_score(self):
@@ -32,7 +33,8 @@ class RandomForest_CV(learning_methods_classification.learning_methods):
         self.logger.add(ret)
 
     #scoring:neg_log_loss
-    def cross_validation(self,scoring='neg_log_loss'):
+    def cross_validation(self):
+        scoring = self.scoring 
         params = {'n_estimators':tunned_n_estimators}
         gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
         gsearch.fit(self.x,self.y)

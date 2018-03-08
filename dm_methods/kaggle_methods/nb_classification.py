@@ -7,12 +7,14 @@ from sklearn.naive_bayes import GaussianNB,MultinomialNB
 
 
 class GaussianNB_CV():
-    def __init__(self,x,y,metric):
+    def __init__(self,x,y,metric,scoring='roc_auc'):
         self.x = x
         self.y = y
         self.metric= metric
         self.model = MultinomialNB()
-    def cross_validation(self,scoring = 'roc_auc'):
+        self.scoring = scoring
+    def cross_validation(self):
+        scoring = self.scoring
         #the scoring parameter is useless in naive bayes, I keep to make sure the api consistent with other methods
         self.model.fit(self.x,self.y)
         return self.model

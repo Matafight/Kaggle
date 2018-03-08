@@ -31,9 +31,23 @@ tunned_colsample_bytree = [0.6]
 
 
 #define a decorator function to record the running time
+'''
 
+metric_name parameter options:
+1. 'rmse'
+2. 'mae'
+3. 'logloss',  负的对数似然
+4. 'error',二类分类错误率，输出大于0.5时为正例，否则负例
+5. 'error@t',同上，不过指定正负例阈值
+6. 'merror',多类分类错误率
+7. 'mlogloss',多类的logloss
+8. 'auc'
+9. 'ndcg',[Normalized Discounted Cumulative Gain][3]
+10. 'map',[Mean average precision][4]
+it is used in xgb.cv function
+'''
 class xgboost_classification_cv:
-    def __init__(self,x,y,metric):
+    def __init__(self,x,y,metric,metric_name='auc',scoring='roc_auc'):
         #default metrics should be metrics.log_loss
         self.x =  x
         self.y = y
@@ -50,13 +64,16 @@ class xgboost_classification_cv:
         self.cv_folds = 5
         self.early_stopping_rounds = 50
         self.metric = metric
+        self.metric_name = metric_name
+        self.scoring = scoring 
+
         
     
     # get the best numrounds after changing a parameter
     def modelfit(self):
         xgb_param = self.model.get_xgb_params()
         dtrain = xgb.DMatrix(self.x,label = self.y)
-        cvresult = xgb.cv(xgb_param,dtrain,num_boost_round=500,nfold=self.cv_folds,metrics='auc',early_stopping_rounds=self.early_stopping_rounds)
+        cvresult = xgb.cv(xgb_param,dtrain,num_boost_round=500,nfold=self.cv_folds,metrics=self.metric_name,early_stopping_rounds=self.early_stopping_rounds)
         self.model.set_params(n_estimators=cvresult.shape[0])
         #self.model.fit(self.x,self.y,eval_metric= 'logloss')
 
@@ -75,7 +92,8 @@ class xgboost_classification_cv:
             score.append(self.metric(test_valid_y,pred_test))
         print('final {} on cv:{}'.format(self.metric.__name__,np.mean(score)))
 
-    def cross_validation(self,scoring='neg_log_loss'):
+    def cross_validation(self):
+        scoring = self.scoring 
         self.modelfit()        
         print('tunning learning_rate...')
         params = {'learning_rate':tunned_learning_rate}

@@ -8,6 +8,7 @@ import numpy as np
 
 
 
+#the sklearn embeded method do not need the metric_name para as in the xgboost or lightgbm models
 class learning_methods(object):
     def __init__(self,x,y,metric):
         self.x = x
