@@ -99,7 +99,7 @@ class lightgbmRegression_CV:
         self.logger.add(msg)
 
 
-    def plot_save(self):
+    def plot_save(self,name='lightgbmRegression'):
         fig = plt.figure()
         ax1 = fig.add_subplot(1,2,1)
         ax1.plot(self.train_scores)
@@ -115,7 +115,7 @@ class lightgbmRegression_CV:
             os.mkdir('./curve')
         import time
         cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-        fig.savefig('./curve/lightgbmRegression_'+cur_time+'_train_cv.png')
+        fig.savefig('./curve/'+name+'_'+cur_time+'_train_cv.png')
 
     def cross_validation(self):
         scoring = self.scoring

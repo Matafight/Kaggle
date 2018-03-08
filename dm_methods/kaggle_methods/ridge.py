@@ -25,6 +25,7 @@ class ridge_CV(learning_methods_regression.learning_methods):
         print('best alpha for ridge:{}'.format(gsearch.best_params_['alpha']))
         self.cv_score()
         self.model.fit(self.x,self.y)
+        self.plot_save(name='ridge')
         return self.model
 
 if __name__ == '__main__':
