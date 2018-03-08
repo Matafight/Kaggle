@@ -3,7 +3,8 @@
 
 import sys
 sys.path.append('..')
-from dm_methods.kaggle_methods.lightgbm_classification import lightgbm_CV
+from dm_methods.kaggle_methods.lightgbm_regression import lightgbmRegression_CV
+from dm_methods.kaggle_methods.ridge import ridge_cv
 import pandas as pd
 import numpy as np
 

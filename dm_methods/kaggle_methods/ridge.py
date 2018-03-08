@@ -6,7 +6,7 @@ import numpy as np
 from . import learning_methods_regression
 tunned_alpha = [0.1,0.3,0.5,1,1.2,1.5,2]
 
-class ridge_cv(learning_methods_regression.learning_methods):
+class ridge_CV(learning_methods_regression.learning_methods):
     #metric is a function parameter
     def __init__(self,x,y,metric,scoring = 'neg_mean_squared_error'):
         super(ridge_cv,self).__init__(x,y,metric)

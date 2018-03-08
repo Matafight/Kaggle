@@ -44,7 +44,7 @@ if None, metric corresponding to specified application will be used
 support multi metrics, separated by ,
 
 '''
-class lightgbm_CV:
+class lightgbmClassification_CV:
     def __init__(self,x,y,metric,metric_name='auc',scoring = 'auc'):
         self.x = x
         self.y = y

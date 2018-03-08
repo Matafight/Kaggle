@@ -14,7 +14,7 @@ tunned_max_features = ['sqrt','log2','auto',None]
 #add more feautre tunning in the future
 
 #应该写一个基类，然后继承该基类
-class RandomForest_CV(learning_methods_classification.learning_methods):
+class RandomForestClassification_CV(learning_methods_classification.learning_methods):
     def __init__(self,x,y,metric,scoring = 'neg_log_loss'):
         super(RandomForest_CV,self).__init__(x,y,metric)
         self.model = RandomForestClassifier()

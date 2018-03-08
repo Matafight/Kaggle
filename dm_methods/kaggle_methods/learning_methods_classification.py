@@ -39,7 +39,7 @@ class learning_methods(object):
         ret = 'train {} on train {} '.format(self.metric.__name__,self.metric(self.y,pred))
         return ret
     #scoring : neg_mean_squared_error 
-    def cross_validation(self,scoring):
+    def cross_validation(self):
         pass
     
 

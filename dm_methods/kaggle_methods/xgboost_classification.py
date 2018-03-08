@@ -46,7 +46,7 @@ metric_name parameter options:
 10. 'map',[Mean average precision][4]
 it is used in xgb.cv function
 '''
-class xgboost_classification_cv:
+class xgboostClassification_CV:
     def __init__(self,x,y,metric,metric_name='auc',scoring='roc_auc'):
         #default metrics should be metrics.log_loss
         self.x =  x
