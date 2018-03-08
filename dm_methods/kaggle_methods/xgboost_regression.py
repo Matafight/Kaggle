@@ -15,7 +15,6 @@ from . import xgboost_base
 import time
 
 
-
 class xgboostRegression_CV(xgboost_base.xgboost_CV):
     def __init__(self,x,y,metric,metric_name='rmse',scoring='neg_mean_squared_error'):
         super(xgboostRegression_CV,self).__init__(x,y,metric,metric_name,scoring)
