@@ -16,15 +16,18 @@ class LogisticRegression_CV(learning_methods_classification.learning_methods):
         self.model = LogisticRegression(C = 1.0,class_weight='balanced')
         self.logger = log_class.log_class("logistic-regression")
         self.scoring = scoring
+
     def cv_score(self):
         ret = super(LogisticRegression_CV,self).cv_score()
         print(ret)
         #add logger here
         self.logger.add(ret)
+
     def train_score(self):
         ret = super(LogisticRegression_CV,self).train_score()
         print(ret)
         self.logger.add(ret)
+        
     #scoring:neg_log_loss
     def cross_validation(self):
         scoring = self.scoring
