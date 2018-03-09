@@ -42,7 +42,7 @@ metric_name parameter options:
 it is used in xgb.cv function
 '''
 class xgboost_CV(object):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc'):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2):
         '''
         metric_proba indicates if the metric need the probability to calculate the score
         '''
@@ -57,7 +57,7 @@ class xgboost_CV(object):
         self.metric_proba = metric_proba
         self.metric_name = metric_name
         self.scoring = scoring 
-
+        self.n_jobs = n_jobs
         self.train_scores = []
         self.cv_scores = []
 
@@ -123,7 +123,7 @@ class xgboost_CV(object):
 
         print('tunning learning_rate...')
         params = {'learning_rate':tunned_learning_rate}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(learning_rate = gsearch.best_params_['learning_rate'])
         print(gsearch.best_params_)
@@ -134,7 +134,7 @@ class xgboost_CV(object):
 
         print('tunning max_depth...')
         depth_params = {'max_depth':tunned_max_depth}
-        gsearch = GridSearchCV(estimator= self.model,param_grid =depth_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator= self.model,param_grid =depth_params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(max_depth=gsearch.best_params_['max_depth'])
         print(gsearch.best_params_)
@@ -146,7 +146,7 @@ class xgboost_CV(object):
 
         print('tunning min_child_weight...')
         min_child_weight_params = {'min_child_weight':tunned_min_child_weight}
-        gsearch = GridSearchCV(estimator=self.model,param_grid = min_child_weight_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator=self.model,param_grid = min_child_weight_params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(max_depth=gsearch.best_params_['min_child_weight'])
         print(gsearch.best_params_)

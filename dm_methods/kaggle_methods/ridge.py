@@ -8,10 +8,11 @@ tunned_alpha = [0.1,0.3,0.5,1,1.2,1.5,2]
 
 class ridge_CV(learning_methods.learning_methods):
     #metric is a function parameter
-    def __init__(self,x,y,metric,metric_proba = False,scoring = 'neg_mean_squared_error'):
+    def __init__(self,x,y,metric,metric_proba = False,scoring = 'neg_mean_squared_error',n_jobs=2):
         super(ridge_CV,self).__init__(x,y,metric,metric_proba=metric_proba,scoring=scoring)
         #normalize 
         self.model = Ridge(alpha=1,normalize=True)
+        self.n_jobs=n_jobs
 
 
     #scoring : neg_mean_squared_error 
@@ -20,7 +21,7 @@ class ridge_CV(learning_methods.learning_methods):
         self.train_score()
         self.cv_score()
         params = {'alpha':tunned_alpha}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(alpha = gsearch.best_params_['alpha'])
         print('best alpha for ridge:{}'.format(gsearch.best_params_['alpha']))

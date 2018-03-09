@@ -11,10 +11,11 @@ tunned_C = [0.2,0.5,1,1.5]
 
 #应该写一个基类，然后继承该基类
 class LogisticRegression_CV(learning_methods.learning_methods):
-    def __init__(self,x,y,metric,metric_proba = False,labels = [0,1],scoring='neg_mean_squared_error'):
+    def __init__(self,x,y,metric,metric_proba = False,labels = [0,1],scoring='neg_mean_squared_error',n_jobs=2):
         super(LogisticRegression_CV,self).__init__(x,y,metric,metric_proba=metric_proba,labels = labels,scoring = scoring)
         self.model = LogisticRegression(C = 1.0,class_weight='balanced')
         #self.logger = log_class.log_class("logistic-regression")
+        self.n_jobs = n_jobs
 
 
     #def cv_score(self):

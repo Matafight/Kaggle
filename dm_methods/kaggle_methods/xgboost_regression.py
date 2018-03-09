@@ -16,8 +16,8 @@ import time
 
 
 class xgboostRegression_CV(xgboost_base.xgboost_CV):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='rmse',scoring='neg_mean_squared_error'):
-        super(xgboostRegression_CV,self).__init__(x,y,metric,metric_proba = metric_proba,metric_name=metric_name,scoring = scoring)
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='rmse',scoring='neg_mean_squared_error',n_jobs=2):
+        super(xgboostRegression_CV,self).__init__(x,y,metric,metric_proba = metric_proba,metric_name=metric_name,scoring = scoring,n_jobs=n_jobs)
         self.model = XGBRegressor(
             learning_rate= 0.5,
             max_depth = 20,
@@ -25,7 +25,7 @@ class xgboostRegression_CV(xgboost_base.xgboost_CV):
             min_child_weight = 1,
             gamma = 0,
             objective='reg:linear',
-            nthread=4,
+            nthread=n_jobs,
             )
 
     def cross_validation(self):

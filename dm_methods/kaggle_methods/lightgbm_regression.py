@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 from . import lightgbm_base
 
 class lightgbmRegression_CV(lightgbm_base.lightgbm_CV):
-    def __init__(self,x,y,metric,metric_proba=False,metric_name='l2',scoring = 'neg_mean_squared_error'):
-        super(lightgbmRegression_CV,self).__init__(x,y,metric,metric_proba=metric_proba,metric_name=metric_name,scoring=scoring)
-        self.model = LGBMRegressor(silent=True)
+    def __init__(self,x,y,metric,metric_proba=False,metric_name='l2',scoring = 'neg_mean_squared_error',n_jobs=2):
+        super(lightgbmRegression_CV,self).__init__(x,y,metric,metric_proba=metric_proba,metric_name=metric_name,scoring=scoring,n_jobs=n_jobs)
+        self.model = LGBMRegressor(silent=True,n_jobs=n_jobs)
    
   
 

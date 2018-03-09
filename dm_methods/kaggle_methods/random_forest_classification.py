@@ -15,10 +15,11 @@ tunned_max_features = ['sqrt','log2','auto',None]
 
 #应该写一个基类，然后继承该基类
 class RandomForestClassification_CV(learning_methods.learning_methods):
-    def __init__(self,x,y,metric,metric_proba = True,labels = [0,1],scoring = 'neg_log_loss'):
+    def __init__(self,x,y,metric,metric_proba = True,labels = [0,1],scoring = 'neg_log_loss',n_jobs=3):
         super(RandomForestClassification_CV,self).__init__(x,y,metric,metric_proba=metric_proba,labels=labels,scoring=scoring)
         self.model = RandomForestClassifier()
         #self.logger = log_class.log_class('random_forest')
+        self.n_jobs=n_jobs
 
     
     #def cv_score(self):
@@ -38,7 +39,7 @@ class RandomForestClassification_CV(learning_methods.learning_methods):
         self.cv_score()
 
         params = {'n_estimators':tunned_n_estimators}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(n_estimators= gsearch.best_params_['n_estimators'])
         print('best n_estimators for rf:{}'.format(gsearch.best_params_['n_estimators']))
@@ -49,7 +50,7 @@ class RandomForestClassification_CV(learning_methods.learning_methods):
 
 
         params = {'max_depth':tunned_max_depth}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(max_depth= gsearch.best_params_['max_depth'])
         print('best max_depth for rf:{}'.format(gsearch.best_params_['max_depth']))
@@ -59,7 +60,7 @@ class RandomForestClassification_CV(learning_methods.learning_methods):
   
 
         params = {'min_samples_split':tunned_min_samples_split}
-        gsearch = GridSearchCV(estimator = self.model,param_grid = params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator = self.model,param_grid = params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(min_samples_split = gsearch.best_params_['min_samples_split'])
         print('best min_samples_split for rf:{}'.format(gsearch.best_params_['min_samples_split']))
@@ -67,7 +68,7 @@ class RandomForestClassification_CV(learning_methods.learning_methods):
         self.train_score()
 
         params = {'min_samples_leaf':tunned_min_samples_leaf}
-        gsearch = GridSearchCV(estimator = self.model,param_grid = params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator = self.model,param_grid = params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(min_samples_leaf = gsearch.best_params_['min_samples_leaf'])
         print('best min_samples_leaf for rf:{}'.format(gsearch.best_params_['min_samples_leaf']))
@@ -75,7 +76,7 @@ class RandomForestClassification_CV(learning_methods.learning_methods):
         self.train_score()
 
         params = {'max_features':tunned_max_features}
-        gsearch = GridSearchCV(estimator = self.model,param_grid = params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch = GridSearchCV(estimator = self.model,param_grid = params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
         gsearch.fit(self.x,self.y)
         self.model.set_params(max_features = gsearch.best_params_['max_features'])
         print('best max_features for rf:{}'.format(gsearch.best_params_['max_features']))
