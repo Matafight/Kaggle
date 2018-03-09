@@ -106,7 +106,7 @@ class xgboost_CV(object):
             dtrain = xgb.DMatrix(train_valid_x,label = train_valid_y)
             dtest = xgb.DMatrix(test_valid_x)
             pred_model = xgb.train(params,dtrain,num_boost_round=int(params['n_estimators']))
-            if self.metric_proba = False:
+            if self.metric_proba == False:
                 pred_test = pred_model.predict(dtest)
             else:
                 pred_test = pred_model.predict_proba(dtest)

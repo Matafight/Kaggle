@@ -6,6 +6,9 @@ sys.path.append('..')
 from dm_methods.kaggle_methods.lightgbm_regression import lightgbmRegression_CV
 from dm_methods.kaggle_methods.ridge import ridge_CV
 from dm_methods.kaggle_methods.xgboost_regression import xgboostRegression_CV
+from dm_methods.kaggle_methods.logistic_regression import LogisticRegression_CV
+from dm_methods.kaggle_methods.ridge import ridge_CV
+from dm_methods.kaggle_methods.random_forest_regression import RandomForestRegression_CV
 from sklearn import metrics
 
 import pandas as pd
@@ -24,7 +27,9 @@ testing = df_test.values
 
 
 #method_name = 'lightgbmRegression_CV'
-method_name='xgboostRegression_CV'
+#method_name='xgboostRegression_CV'
+#method_name = 'ridge_CV'
+method_name = 'RandomForestRegression_CV'
 metric = metrics.mean_squared_error
 mcls = eval(method_name)(training,train_label,metric = metric,scoring = 'neg_mean_squared_error')
 lgbmodel = mcls.cross_validation()

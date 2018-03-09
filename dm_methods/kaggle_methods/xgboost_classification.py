@@ -1,7 +1,5 @@
 #_*_ coding:utf-8
-'''
-xgboostClassification 继承xgboost_base有一个问题是，xgboostClass 可能需要 predict_proba这个函数
-'''
+
 import xgboost as xgb
 import numpy as np
 from xgboost.sklearn import  XGBClassifier
