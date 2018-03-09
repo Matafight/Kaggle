@@ -42,7 +42,10 @@ metric_name parameter options:
 it is used in xgb.cv function
 '''
 class xgboost_CV(object):
-    def __init__(self,x,y,metric,metric_name='auc',scoring='roc_auc'):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc'):
+        '''
+        metric_proba indicates if the metric need the probability to calculate the score
+        '''
         #default metrics should be metrics.log_loss
         self.x =  x
         self.y = y
@@ -51,6 +54,7 @@ class xgboost_CV(object):
         self.cv_folds = 5
         self.early_stopping_rounds = 50
         self.metric = metric
+        self.metric_proba = metric_proba
         self.metric_name = metric_name
         self.scoring = scoring 
 
@@ -84,7 +88,10 @@ class xgboost_CV(object):
         self.model.fit(self.x,self.y)
 
         #calculate train score
-        pred = self.model.predict(self.x)
+        if self.metric_proba == False:
+            pred = self.model.predict(self.x)
+        else:
+            pred = self.model.predict_proba(self.x)
         self.train_scores.append(self.metric(self.y,pred))
 
 
@@ -99,7 +106,10 @@ class xgboost_CV(object):
             dtrain = xgb.DMatrix(train_valid_x,label = train_valid_y)
             dtest = xgb.DMatrix(test_valid_x)
             pred_model = xgb.train(params,dtrain,num_boost_round=int(params['n_estimators']))
-            pred_test = pred_model.predict(dtest)
+            if self.metric_proba = False:
+                pred_test = pred_model.predict(dtest)
+            else:
+                pred_test = pred_model.predict_proba(dtest)
             score.append(self.metric(test_valid_y,pred_test))
         mean_cv_score = np.mean(score)
         self.cv_scores.append(mean_cv_score)
