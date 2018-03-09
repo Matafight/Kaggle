@@ -92,7 +92,7 @@ class xgboost_CV(object):
         if self.save_model:
             #save model here
             from sklearn.externals import joblib
-            if not os.path.exists('./modules')
+            if not os.path.exists('./modules'):
                 os.mkdir('./modules')
             joblib.dump(self.model,'./modules/'+name+"_"+cur_time+".pkl")
     
