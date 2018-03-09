@@ -16,8 +16,8 @@ import time
 
 
 class xgboostRegression_CV(xgboost_base.xgboost_CV):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='rmse',scoring='neg_mean_squared_error',n_jobs=2):
-        super(xgboostRegression_CV,self).__init__(x,y,metric,metric_proba = metric_proba,metric_name=metric_name,scoring = scoring,n_jobs=n_jobs)
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='rmse',scoring='neg_mean_squared_error',n_jobs=2,save_model=False):
+        super(xgboostRegression_CV,self).__init__(x,y,metric,metric_proba = metric_proba,metric_name=metric_name,scoring = scoring,n_jobs=n_jobs,save_model=save_model)
         self.model = XGBRegressor(
             learning_rate= 0.5,
             max_depth = 20,

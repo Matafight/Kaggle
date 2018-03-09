@@ -8,8 +8,8 @@ tunned_alpha = [0.1,0.3,0.5,1,1.2,1.5,2]
 
 class ridge_CV(learning_methods.learning_methods):
     #metric is a function parameter
-    def __init__(self,x,y,metric,metric_proba = False,scoring = 'neg_mean_squared_error',n_jobs=2):
-        super(ridge_CV,self).__init__(x,y,metric,metric_proba=metric_proba,scoring=scoring)
+    def __init__(self,x,y,metric,metric_proba = False,scoring = 'neg_mean_squared_error',n_jobs=2,save_model=False):
+        super(ridge_CV,self).__init__(x,y,metric,metric_proba=metric_proba,scoring=scoring,save_model=save_model)
         #normalize 
         self.model = Ridge(alpha=1,normalize=True)
         self.n_jobs=n_jobs

@@ -8,6 +8,7 @@ from sklearn.model_selection import KFold
 from sklearn import metrics
 import time
 import matplotlib.pyplot as plt
+from . import log_class
 #parameters to be tunned
 #tunned_max_depth = [3,5,7,9]
 #tunned_learning_rate =[0.01,0.015,0.025,0.05,0.1]  # aka eta in xgboost
@@ -42,7 +43,7 @@ metric_name parameter options:
 it is used in xgb.cv function
 '''
 class xgboost_CV(object):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False):
         '''
         metric_proba indicates if the metric need the probability to calculate the score
         '''
@@ -58,8 +59,10 @@ class xgboost_CV(object):
         self.metric_name = metric_name
         self.scoring = scoring 
         self.n_jobs = n_jobs
+        self.save_model = save_model
         self.train_scores = []
         self.cv_scores = []
+        self.logger = log_class.log_class('xgboost')
 
     def plot_save(self,name='learning_method'):
         fig = plt.figure()
@@ -77,7 +80,21 @@ class xgboost_CV(object):
             os.mkdir('./curve')
         import time
         cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-        fig.savefig('./curve/'+name+'_'+cur_time+'_train_cv.png')        
+        fig.savefig('./curve/'+name+'_'+cur_time+'_train_cv.png')     
+
+        #save train score and cv score
+        str_train_score ="train score sequence "+" ".join([str(item) for item in self.train_scores])
+        str_cv_score = "cv score sequence"+ " ".join([str(item) for item in self.cv_scores])
+        self.logger.add(str_train_score)
+        self.logger.add(str_cv_score)   
+
+        #determine if save model
+        if self.save_model:
+            #save model here
+            from sklearn.externals import joblib
+            if not os.path.exists('./modules')
+                os.mkdir('./modules')
+            joblib.dump(self.model,'./modules/'+name+"_"+cur_time+".pkl")
     
     # get the best numrounds after changing a parameter
     def modelfit(self):

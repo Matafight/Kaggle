@@ -9,8 +9,8 @@ from sklearn.svm import SVC
 tunned_C =[0.5,1,1.3]
 
 class SVC_CV(learning_methods.learning_methods):
-    def __init__(self,x,y,metric,metric_proba = True,labels = [0,1],scoring='neg_log_loss',n_jobs=2):
-        super(SVC_CV,self).__init__(x,y,metric,metric_proba = metric_proba,labels = labels,scoring=scoring)
+    def __init__(self,x,y,metric,metric_proba = True,labels = [0,1],scoring='neg_log_loss',n_jobs=2,save_model=False):
+        super(SVC_CV,self).__init__(x,y,metric,metric_proba = metric_proba,labels = labels,scoring=scoring,save_model=save_model)
         #default kernel is rbf
         self.model = SVC(C = 1.0,probability=True)
         self.n_jobs = n_jobs
