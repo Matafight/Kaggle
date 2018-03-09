@@ -23,3 +23,6 @@ This is the first competition I take it seriously, I write my complete auto hype
 - 所有方法具有相同的接口函数，这意味着可以通过传入函数名的字符串调用相应的函数，类似于工厂模式？
 - sklearn内置的函数继承同一父类
 - xgboost、lightgbm回归和分类的代码继承同一父类
+
+todo:
+- 基于上述方法构建ensemble的代码，包括 bagging,stacking,blending
