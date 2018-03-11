@@ -6,6 +6,8 @@ from . import log_class
 import os
 from sklearn.externals import joblib
 from sklearn.model_selection import KFold
+from sklearn import metrics
+from ridge import ridge_CV
 
 class stacking(object):
     def __init__(self,x,y,test_x,module_dir='./modules',task = 'regression'):
@@ -64,3 +66,11 @@ class stacking(object):
         testX = np.concatenate((self.test_x,test_fir),axis=1)
 
         #second layer module can use the existing methods
+        metric = metrics.mean_squared_error
+        scoring = 'neg_mean_squared_error'
+        ridge_cls = ridge_CV(trainX,self.y,metric=metric,scoring=scoring)
+        ridge_model = ridge_cls.cross_validation()
+        pred = ridge_model.predict(testX)
+        return pred
+
+        
