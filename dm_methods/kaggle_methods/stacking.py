@@ -20,7 +20,7 @@ class stacking(object):
         self.SEED = 1024
         self.task = task
         for name in moduleNames:
-            self.modules.append(joblib.load(name))
+            self.modules.append(joblib.load(module_dir+'/'+name))
         print('initializing finished ...')
 
     def get_oof(self,clf):

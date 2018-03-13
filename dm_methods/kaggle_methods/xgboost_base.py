@@ -28,6 +28,8 @@ tunned_colsample_bytree = [0.6]
 
 #define a decorator function to record the running time
 '''
+http://xgboost.readthedocs.io/en/latest/parameter.html
+http://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn
 
 metric_name parameter options:
 1. 'rmse'
@@ -99,6 +101,7 @@ class xgboost_CV(object):
     # get the best numrounds after changing a parameter
     def modelfit(self):
         xgb_param = self.model.get_xgb_params()
+        print(xgb_param)
         dtrain = xgb.DMatrix(self.x,label = self.y)
         cvresult = xgb.cv(xgb_param,dtrain,num_boost_round=500,nfold=self.cv_folds,metrics=self.metric_name,early_stopping_rounds=self.early_stopping_rounds)
         self.model.set_params(n_estimators=cvresult.shape[0])

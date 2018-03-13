@@ -4,7 +4,6 @@ from lightgbm import LGBMRegressor
 from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
 from . import log_class
-import numpy as np
 import matplotlib.pyplot as plt
 from . import lightgbm_base
 
