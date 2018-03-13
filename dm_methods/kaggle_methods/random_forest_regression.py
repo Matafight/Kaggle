@@ -15,8 +15,8 @@ tunned_max_features = ['sqrt','log2','auto',None]
 
 #应该写一个基类，然后继承该基类
 class RandomForestRegression_CV(learning_methods.learning_methods):
-    def __init__(self,x,y,metric,scoring = 'neg_mean_squared_error',n_jobs=3,save_model = False):
-        super(RandomForestRegression_CV,self).__init__(x,y,metric,scoring=scoring,save_model=save_model)
+    def __init__(self,x,y,metric,scoring = 'neg_mean_squared_error',n_jobs=3,save_model = False,processed_data_version_dir='./'):
+        super(RandomForestRegression_CV,self).__init__(x,y,metric,scoring=scoring,save_model=save_model,processed_data_version_dir=processed_data_version_dir)
         self.model = RandomForestRegressor(n_jobs=n_jobs)
         self.n_jobs = n_jobs
 

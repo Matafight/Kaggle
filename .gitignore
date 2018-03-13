@@ -12,5 +12,6 @@ test/
 _pycache_/
 log/
 curve/
+*dataVersion/
 *.pyc
 *.un~

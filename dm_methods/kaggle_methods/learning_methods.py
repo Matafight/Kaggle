@@ -11,7 +11,10 @@ from . import log_class
 
 class learning_methods(object):
     #parameter labels is designed for classification tasks that the training data is highly imbalanced
-    def __init__(self,x,y,metric,metric_proba = False,labels = None,scoring = 'auc',save_model=False):
+    def __init__(self,x,y,metric,metric_proba = False,labels = None,scoring = 'auc',save_model=False,processed_data_version_dir='./'):
+        import os
+        if not os.path.exists(processed_data_version_dir):
+            os.mkdir(processed_data_version_dir)
         self.x = x
         self.y = y
         self.metric = metric
@@ -22,6 +25,9 @@ class learning_methods(object):
         self.scoring = scoring
         self.train_scores = []
         self.cv_scores = []
+
+        self.path = processed_data_version_dir
+        
 
     def plot_save(self,name='learning_method'):
         fig = plt.figure()
@@ -35,14 +41,15 @@ class learning_methods(object):
 
         #save 
         import os
-        if not os.path.exists('./curve'):
-            os.mkdir('./curve')
+        npath = self.path
+        if not os.path.exists(npath+'/curve'):
+            os.mkdir(npath+'/curve')
         import time
         cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-        fig.savefig('./curve/'+name+'_'+cur_time+'_train_cv.png')
+        fig.savefig(npath+'/curve/'+name+'_'+cur_time+'_train_cv.png')
 
         #save train score and cv score
-        logger = log_class.log_class(name)
+        logger = log_class.log_class(name,top_level = npath)
         str_train_score ="train score sequence "+" ".join([str(item) for item in self.train_scores])
         str_cv_score = "cv score sequence"+ " ".join([str(item) for item in self.cv_scores])
         logger.add(str_train_score)
@@ -51,9 +58,9 @@ class learning_methods(object):
         if self.save_model:
             #save model here
             from sklearn.externals import joblib
-            if not os.path.exists('./modules'):
-                os.mkdir('./modules')
-            joblib.dump(self.model,'./modules/'+name+"_"+cur_time+".pkl")
+            if not os.path.exists(npath+'/modules'):
+                os.mkdir(npath+'/modules')
+            joblib.dump(self.model,npath+'/modules/'+name+"_"+cur_time+".pkl")
 
     def train_score(self):
         self.model.fit(self.x,self.y)

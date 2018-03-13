@@ -26,7 +26,7 @@ training = df_train.values
 testing = df_test.values
 
 
-#method_name = 'lightgbmRegression_CV'
+method_name = 'lightgbmRegression_CV'
 #method_name='xgboostRegression_CV'
 #method_name = 'ridge_CV'
 #method_name = 'RandomForestRegression_CV'
@@ -34,15 +34,18 @@ testing = df_test.values
 n_jobs = 3
 save_model=True
 metric = metrics.mean_squared_error
+processed_data_version_dir = './processed_dataVersion'
 if __name__ =='__main__':
-    mcls = eval(method_name)(training,train_label,metric = metric,scoring = 'neg_mean_squared_error',n_jobs=n_jobs,save_model=save_model)
+    mcls = eval(method_name)(training,train_label,metric = metric,scoring = 'neg_mean_squared_error',n_jobs=n_jobs,save_model=save_model,processed_data_version_dir=processed_data_version_dir)
     lgbmodel = mcls.cross_validation()
     
     # generate submission
     pred_test = lgbmodel.predict(testing)
     pred_test = np.exp(pred_test)
     submission['SalePrice'] = pred_test
-    submission.to_csv(method_name+'.csv',index=False)
+
+    #this can be seen as a constant part for different tasks
+    submission.to_csv(processed_data_version_dir+'/'+method_name+'.csv',index=False)
 
 
 
