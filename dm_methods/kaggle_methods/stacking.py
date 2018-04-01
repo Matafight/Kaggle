@@ -1,14 +1,14 @@
 #_*_ coding:utf-8 _*_
 
+#from . import log_class
 import pandas as pd
 import numpy as np
-from . import log_class
 import os
 from sklearn.externals import joblib
 from sklearn.model_selection import KFold
 from sklearn import metrics
 from ridge import ridge_CV
-
+from . import ridge
 class stacking(object):
     def __init__(self,x,y,test_x,module_dir='./modules',task = 'regression'):
         self.x = x
