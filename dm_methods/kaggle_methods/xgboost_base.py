@@ -28,6 +28,8 @@ tunned_colsample_bytree = [0.6]
 
 #define a decorator function to record the running time
 '''
+http://xgboost.readthedocs.io/en/latest/parameter.html
+http://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn
 
 metric_name parameter options:
 1. 'rmse'
@@ -43,11 +45,14 @@ metric_name parameter options:
 it is used in xgb.cv function
 '''
 class xgboost_CV(object):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False,processed_data_version_dir = './'):
         '''
         metric_proba indicates if the metric need the probability to calculate the score
         '''
         #default metrics should be metrics.log_loss
+        import os
+        if not os.path.exists(processed_data_version_dir):
+            os.mkdir(processed_data_version_dir)
         self.x =  x
         self.y = y
         # define the algorithm using default parameters
@@ -62,9 +67,10 @@ class xgboost_CV(object):
         self.save_model = save_model
         self.train_scores = []
         self.cv_scores = []
-        self.logger = log_class.log_class('xgboost')
+        self.logger = log_class.log_class('xgboost',top_level = processed_data_version_dir)
+        self.path = processed_data_version_dir
 
-    def plot_save(self,name='learning_method'):
+    def plot_save(self,name='xgboostRegression'):
         fig = plt.figure()
         ax1 = fig.add_subplot(1,2,1)
         ax1.plot(self.train_scores)
@@ -76,29 +82,31 @@ class xgboost_CV(object):
 
         #save 
         import os
-        if not os.path.exists('./curve'):
-            os.mkdir('./curve')
+        npath = self.path
+        if not os.path.exists(npath+'/curve'):
+            os.mkdir(npath+'/curve')
         import time
         cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-        fig.savefig('./curve/'+name+'_'+cur_time+'_train_cv.png')     
+        fig.savefig(npath+'/curve/'+name+'_'+cur_time+'_train_cv.png')
 
         #save train score and cv score
         str_train_score ="train score sequence "+" ".join([str(item) for item in self.train_scores])
         str_cv_score = "cv score sequence"+ " ".join([str(item) for item in self.cv_scores])
         self.logger.add(str_train_score)
-        self.logger.add(str_cv_score)   
+        self.logger.add(str_cv_score)
 
         #determine if save model
         if self.save_model:
             #save model here
             from sklearn.externals import joblib
-            if not os.path.exists('./modules'):
-                os.mkdir('./modules')
-            joblib.dump(self.model,'./modules/'+name+"_"+cur_time+".pkl")
+            if not os.path.exists(npath+'/modules'):
+                os.mkdir(npath+'/modules')
+            joblib.dump(self.model,npath+'/modules/'+name+"_"+cur_time+".pkl")
     
     # get the best numrounds after changing a parameter
     def modelfit(self):
         xgb_param = self.model.get_xgb_params()
+        print(xgb_param)
         dtrain = xgb.DMatrix(self.x,label = self.y)
         cvresult = xgb.cv(xgb_param,dtrain,num_boost_round=500,nfold=self.cv_folds,metrics=self.metric_name,early_stopping_rounds=self.early_stopping_rounds)
         self.model.set_params(n_estimators=cvresult.shape[0])

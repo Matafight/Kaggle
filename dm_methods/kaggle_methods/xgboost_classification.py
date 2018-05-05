@@ -11,8 +11,8 @@ from . import xgboost_base
 
 
 class xgboostClassification_CV(xgboost_base.xgboost_CV):
-    def __init__(self,x,y,metric,metric_proba = True,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model=False):
-        super(xgboostClassification_CV,self).__init__(x,y,metric,metric_proba = metric_proba,metric_name= metric_name,scoring=scoring,n_jobs=n_jobs,save_model=save_model)
+    def __init__(self,x,y,metric,metric_proba = True,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model=False,processed_data_version_dir= './'):
+        super(xgboostClassification_CV,self).__init__(x,y,metric,metric_proba = metric_proba,metric_name= metric_name,scoring=scoring,n_jobs=n_jobs,save_model=save_model,processed_data_version_dir = processed_data_version_dir)
         self.model = XGBClassifier(
             learning_rate= 0.5,
             max_depth = 20,

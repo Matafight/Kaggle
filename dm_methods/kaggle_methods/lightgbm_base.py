@@ -48,7 +48,10 @@ support multi metrics, separated by ,
 
 '''
 class lightgbm_CV(object):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='l2',scoring = 'neg_mean_squared_error',n_jobs=2,save_model = False):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='l2',scoring = 'neg_mean_squared_error',n_jobs=2,save_model = False,processed_data_version_dir='./'):
+        import os
+        if not os.path.exists(processed_data_version_dir):
+            os.mkdir(processed_data_version_dir)
         self.x = x
         self.y = y
         #use default values
@@ -57,11 +60,14 @@ class lightgbm_CV(object):
         self.metric_proba = metric_proba        
         self.metric_name = metric_name
         self.scoring = scoring 
-        self.logger = log_class.log_class('lightgbm')
+        self.logger = log_class.log_class('lightgbm',top_level=processed_data_version_dir)
         self.n_jobs=n_jobs
         self.save_model = save_model
         self.train_scores=[]
         self.cv_scores = []
+
+        
+        self.path = processed_data_version_dir
 
     def modelfit(self):
         #return the best n_estimators
@@ -119,11 +125,12 @@ class lightgbm_CV(object):
 
         #save 
         import os
-        if not os.path.exists('./curve'):
-            os.mkdir('./curve')
+        npath = self.path
+        if not os.path.exists(npath+'/curve'):
+            os.mkdir(npath+'/curve')
         import time
         cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-        fig.savefig('./curve/'+name+'_'+cur_time+'_train_cv.png')
+        fig.savefig(npath+'/curve/'+name+'_'+cur_time+'_train_cv.png')
 
         #save train score and cv score
         str_train_score ="train score sequence "+" ".join([str(item) for item in self.train_scores])
@@ -135,9 +142,9 @@ class lightgbm_CV(object):
         if self.save_model:
             #save model here
             from sklearn.externals import joblib
-            if not os.path.exists('./modules'):
-                os.mkdir('./modules')
-            joblib.dump(self.model,'./modules/'+name+"_"+cur_time+".pkl")
+            if not os.path.exists(npath+'/modules'):
+                os.mkdir(npath+'/modules')
+            joblib.dump(self.model,npath+'/modules/'+name+"_"+cur_time+".pkl")
 
             
 

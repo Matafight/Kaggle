@@ -7,8 +7,8 @@ from dm_methods.kaggle_methods.lightgbm_regression import lightgbmRegression_CV
 from dm_methods.kaggle_methods.ridge import ridge_CV
 from dm_methods.kaggle_methods.xgboost_regression import xgboostRegression_CV
 from dm_methods.kaggle_methods.logistic_regression import LogisticRegression_CV
-from dm_methods.kaggle_methods.ridge import ridge_CV
 from dm_methods.kaggle_methods.random_forest_regression import RandomForestRegression_CV
+from dm_methods.kaggle_methods.svr import SVR_CV
 from sklearn import metrics
 
 import pandas as pd
@@ -26,22 +26,26 @@ training = df_train.values
 testing = df_test.values
 
 
-#method_name = 'lightgbmRegression_CV'
+method_name = 'lightgbmRegression_CV'
 #method_name='xgboostRegression_CV'
 #method_name = 'ridge_CV'
-method_name = 'RandomForestRegression_CV'
+#method_name = 'RandomForestRegression_CV'
+#method_name = 'SVR_CV' 
 n_jobs = 3
 save_model=True
 metric = metrics.mean_squared_error
+processed_data_version_dir = './processed_dataVersion'
 if __name__ =='__main__':
-    mcls = eval(method_name)(training,train_label,metric = metric,scoring = 'neg_mean_squared_error',n_jobs=n_jobs,save_model=save_model)
+    mcls = eval(method_name)(training,train_label,metric = metric,scoring = 'neg_mean_squared_error',n_jobs=n_jobs,save_model=save_model,processed_data_version_dir=processed_data_version_dir)
     lgbmodel = mcls.cross_validation()
     
     # generate submission
-    #pred_test = lgbmodel.predict(testing)
-    #pred_test = np.exp(pred_test)
-    #submission['SalePrice'] = pred_test
-    #submission.to_csv(method_name+'.csv',index=False)
+    pred_test = lgbmodel.predict(testing)
+    pred_test = np.exp(pred_test)
+    submission['SalePrice'] = pred_test
+
+    #this can be seen as a constant part for different tasks
+    submission.to_csv(processed_data_version_dir+'/'+method_name+'.csv',index=False)
 
 
 
