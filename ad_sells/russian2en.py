@@ -17,6 +17,7 @@ from tqdm import tqdm,tqdm_pandas
 
 def read(x):
     return pd.read_csv(x)
+
 def desc_missing(x):
     '''
     Takes data frame as input, then searches and fills missing description with недостающий
@@ -27,11 +28,13 @@ def desc_missing(x):
         return x
     else:
         return x
+
 def translate(x):
     try:
         return textblob.TextBlob(x).translate(to="en")
     except:
         return x
+
 def map_translate(x):
     print("Begining to translate")
     tqdm.pandas(tqdm())
@@ -39,6 +42,15 @@ def map_translate(x):
     print("Done translating decription")
     print("Begining to translate Title")
     x['en_title']=x['title'].progress_map(translate)
+    print("Done translating")
+    print("Begining to translate region")
+    x['en_region']=x['region'].progress_map(translate)
+    print("Done translating")
+    print("Begining to translate city")
+    x['en_city']=x['city'].progress_map(translate)
+    print("Done translating")
+    print("Begining to translate category_name")
+    x['en_category_name']=x['category_name'].progress_map(translate)
     print("Done translating")
     return x
 
@@ -57,5 +69,5 @@ def main():
     exporter(data,dest)
  
 #uncomment 
-#if __name__ == '__main__':
-#    main()
+if __name__ == '__main__':
+    main()
