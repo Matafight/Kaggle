@@ -11,14 +11,11 @@ from . import xgboost_base
 
 
 class xgboostClassification_CV(xgboost_base.xgboost_CV):
-    def __init__(self,x,y,metric,metric_proba = True,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model=False,processed_data_version_dir= './'):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=4,save_model=False,processed_data_version_dir= './',scale_pos_weight=1):
         super(xgboostClassification_CV,self).__init__(x,y,metric,metric_proba = metric_proba,metric_name= metric_name,scoring=scoring,n_jobs=n_jobs,save_model=save_model,processed_data_version_dir = processed_data_version_dir)
+        #计算负正样本的比例
         self.model = XGBClassifier(
-            learning_rate= 0.5,
-            max_depth = 20,
-            n_estimators = 100,
-            min_child_weight = 1,
-            gamma = 0,
+            scale_pos_weight=scale_pos_weight,
             objective='binary:logistic',
             nthread=n_jobs,
             )

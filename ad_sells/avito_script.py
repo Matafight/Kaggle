@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import pickle
+from dm_methods.kaggle_methods.logistic_regression import LogisticRegression_CV
+
 
 def load_data():
     train_path = './input/train_data.dat'

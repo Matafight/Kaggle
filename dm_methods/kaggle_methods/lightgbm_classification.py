@@ -9,9 +9,10 @@ from . import lightgbm_base
 
 
 class lightgbmClassification_CV(lightgbm_base.lightgbm_CV):
-    def __init__(self,x,y,metric,metric_proba = True,metric_name='auc',scoring = 'auc',n_jobs=2,save_model=False，processed_data_version_dir='./'):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring = 'auc',n_jobs=2,save_model=False,processed_data_version_dir='./'):
         super(lightgbmClassification_CV,self).__init__(x,y,metric,metric_proba,metric_name=metric_name,scoring=scoring,n_jobs=n_jobs,save_model=save_model,processed_data_version_dir = processed_data_version_dir)
         self.model = LGBMClassifier(silent=True,n_jobs=n_jobs)
+
         
 
       

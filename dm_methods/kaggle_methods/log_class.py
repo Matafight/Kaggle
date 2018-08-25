@@ -5,11 +5,15 @@ import os
 
 class log_class():
     model_path= ''
-    def __init__(self,model_name,top_level='./'):
+    def __init__(self,model_name,top_level='./',no_time=0):
         if not os.path.exists(top_level+'/log'):
             os.mkdir(top_level+'/log')
         cur_time = time.strftime("%Y-%m-%d-%H-%M",time.localtime())
-        path = top_level+'/log/'+model_name+'_'+cur_time+'.txt'
+        if no_time == 0:
+            path = top_level+'/log/'+model_name+'_'+cur_time+'.txt'
+        else:
+            path = top_level+'/log/'+model_name+'.txt'
+
         with open(path,'a') as fh:
             fh.write(cur_time+'\n')
         self.model_path=path
@@ -21,7 +25,7 @@ class log_class():
             with open(self.model_path,'a') as fh:
                 for item in info:
                     fh.write(item+':')
-                    fh.write(str(info[item])+' ')
+                    fh.write(str(info[item])+'\n')
 
 if __name__ == '__main__':
     mylog = log_class('testmodel')

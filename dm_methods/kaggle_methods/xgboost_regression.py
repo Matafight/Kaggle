@@ -11,7 +11,7 @@ from xgboost.sklearn import  XGBRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
 from sklearn import metrics
-from . import xgboost_base
+import xgboost_base
 import time
 
 

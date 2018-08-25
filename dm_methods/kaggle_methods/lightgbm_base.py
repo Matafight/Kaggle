@@ -7,9 +7,9 @@ from . import log_class
 import numpy as np
 import matplotlib.pyplot as plt
 
-tunned_num_leaves = [25,31,45,70,100]
-tunned_max_depth = [-1,20,30,60]
-tunned_min_data_in_leaf = [20,40,60,100]
+tunned_num_leaves = [25,31]
+tunned_max_depth = [-1]
+tunned_min_data_in_leaf = [20]
 
 '''
 optional: http://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics
@@ -151,42 +151,42 @@ class lightgbm_CV(object):
 
 
     def cross_validation(self):
-        scoring = self.scoring
+        #scoring = self.scoring
 
-        self.modelfit()
-        self.cv_score()
+        ##self.modelfit()
+        ##self.cv_score()
 
-        print('tunning num_leaves...')
-        params = {'num_leaves':tunned_num_leaves}
-        print(self.model.get_params())
-        self.model.set_params(silent = True)
-        gsearch = GridSearchCV(self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(num_leaves = gsearch.best_params_['num_leaves'])
-        print(gsearch.best_params_['num_leaves'])
+        #print('tunning num_leaves...')
+        #params = {'num_leaves':tunned_num_leaves}
+        #print(self.model.get_params())
+        #self.model.set_params(silent = True)
+        #gsearch = GridSearchCV(self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
+        #gsearch.fit(self.x,self.y)
+        #self.model.set_params(num_leaves = gsearch.best_params_['num_leaves'])
+        #print(gsearch.best_params_['num_leaves'])
 
-        self.modelfit()
-        self.cv_score()
+        ##self.modelfit()
+        ##self.cv_score()
 
-        print('tunning max_depth...')
-        params = {'max_depth':tunned_max_depth}
-        gsearch = GridSearchCV(self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(max_depth = gsearch.best_params_['max_depth'])
-        print(gsearch.best_params_['max_depth'])
+        #print('tunning max_depth...')
+        #params = {'max_depth':tunned_max_depth}
+        #gsearch = GridSearchCV(self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
+        #gsearch.fit(self.x,self.y)
+        #self.model.set_params(max_depth = gsearch.best_params_['max_depth'])
+        #print(gsearch.best_params_['max_depth'])
 
-        self.modelfit()
-        self.cv_score()
+        #self.modelfit()
+        #self.cv_score()
 
-        print('tunning min_data_in_leaf...')  
-        params = {'min_data_in_leaf':tunned_min_data_in_leaf}
-        gsearch = GridSearchCV(self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(min_data_in_leaf = gsearch.best_params_['min_data_in_leaf'])
-        print(gsearch.best_params_['min_data_in_leaf'])
+        #print('tunning min_data_in_leaf...')  
+        #params = {'min_data_in_leaf':tunned_min_data_in_leaf}
+        #gsearch = GridSearchCV(self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
+        #gsearch.fit(self.x,self.y)
+        #self.model.set_params(min_data_in_leaf = gsearch.best_params_['min_data_in_leaf'])
+        #print(gsearch.best_params_['min_data_in_leaf'])
 
-        self.modelfit()
-        self.cv_score()
+        #self.modelfit()
+        #self.cv_score()
 
         self.model.fit(self.x,self.y)
         return self.model

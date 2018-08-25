@@ -5,6 +5,7 @@ import numpy as np
 from xgboost.sklearn import  XGBClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn import metrics
 import time
 import matplotlib.pyplot as plt
@@ -16,11 +17,11 @@ from . import log_class
 #tunned_gamma = [0.05,0.1,0.3,0.5,0.7,0.9,1]
 #tunned_colsample_bytree = [0.6,0.7,0.8,1]
 
-tunned_max_depth = [3]
-tunned_learning_rate =[0.01,0.015]  # aka eta in xgboost
-tunned_min_child_weight = [1,3]
+tunned_max_depth = [3,5,7,9]
+tunned_learning_rate =[0.05,0.1,0.5]  # aka eta in xgboost
+tunned_min_child_weight = [1,5,7]
 tunned_gamma = [0.05]
-tunned_colsample_bytree = [0.6]
+tunned_colsample_bytree = [0.8]
 
 
 # 还需要添加subsample,lambda,alpha等参数
@@ -48,6 +49,11 @@ class xgboost_CV(object):
     def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False,processed_data_version_dir = './'):
         '''
         metric_proba indicates if the metric need the probability to calculate the score
+        metric 其实就是训练过程中的评估函数，是我自己手动用来评估训练效果的。
+        metric_name 是xgboost cv 中的一个参数。
+        scoring是专门给GridSearchCV设置的一个参数，因为GridSearchCV只接受指定的那几个字符串。
+        scoring只可以选择sklearn对应的几个，其值是越大越好。
+        当metric是越高越好时，他们三者是一致的，否则 scoring与 metric 和 metric_name 不一致。
         '''
         #default metrics should be metrics.log_loss
         import os
@@ -103,7 +109,7 @@ class xgboost_CV(object):
                 os.mkdir(npath+'/modules')
             joblib.dump(self.model,npath+'/modules/'+name+"_"+cur_time+".pkl")
     
-    # get the best numrounds after changing a parameter
+    # get the best num rounds after changing a parameter
     def modelfit(self):
         xgb_param = self.model.get_xgb_params()
         print(xgb_param)
@@ -121,11 +127,11 @@ class xgboost_CV(object):
 
 
     def cv_score(self):
-        # 5-fold crossvalidation error
-        kf = KFold(n_splits = 5)
+        # 5-fold crossvalidation 
+        kf = StratifiedKFold(n_splits = 5,shuffle=True,random_state=2018)
         score = []
         params = self.model.get_xgb_params()
-        for train_ind,test_ind in kf.split(self.x):
+        for train_ind,test_ind in kf.split(self.x,self.y):
             train_valid_x,train_valid_y = self.x[train_ind],self.y[train_ind]
             test_valid_x,test_valid_y = self.x[test_ind],self.y[test_ind]
             dtrain = xgb.DMatrix(train_valid_x,label = train_valid_y)
@@ -142,43 +148,43 @@ class xgboost_CV(object):
 
 
     def cross_validation(self):
-        scoring = self.scoring 
-        self.modelfit()
-        self.cv_score()
+        #scoring = self.scoring 
+        #self.modelfit()
+        #self.cv_score()
 
-        print('tunning learning_rate...')
-        params = {'learning_rate':tunned_learning_rate}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(learning_rate = gsearch.best_params_['learning_rate'])
-        print(gsearch.best_params_)
+        #print('tunning learning_rate...')
+        #params = {'learning_rate':tunned_learning_rate}
+        #gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        #gsearch.fit(self.x,self.y)
+        #self.model.set_params(learning_rate = gsearch.best_params_['learning_rate'])
+        #print(gsearch.best_params_)
         
-        self.modelfit()
-        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
+        #self.modelfit()
+        #print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
+        #self.cv_score()
 
-        print('tunning max_depth...')
-        depth_params = {'max_depth':tunned_max_depth}
-        gsearch = GridSearchCV(estimator= self.model,param_grid =depth_params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(max_depth=gsearch.best_params_['max_depth'])
-        print(gsearch.best_params_)
+        #print('tunning max_depth...')
+        #depth_params = {'max_depth':tunned_max_depth}
+        #gsearch = GridSearchCV(estimator= self.model,param_grid =depth_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        #gsearch.fit(self.x,self.y)
+        #self.model.set_params(max_depth=gsearch.best_params_['max_depth'])
+        #print(gsearch.best_params_)
 
-        self.modelfit()
-        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
+        #self.modelfit()
+        #print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
+        #self.cv_score()
 
 
-        print('tunning min_child_weight...')
-        min_child_weight_params = {'min_child_weight':tunned_min_child_weight}
-        gsearch = GridSearchCV(estimator=self.model,param_grid = min_child_weight_params,scoring=scoring,n_jobs=self.n_jobs,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(max_depth=gsearch.best_params_['min_child_weight'])
-        print(gsearch.best_params_)
+        #print('tunning min_child_weight...')
+        #min_child_weight_params = {'min_child_weight':tunned_min_child_weight}
+        #gsearch = GridSearchCV(estimator=self.model,param_grid = min_child_weight_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        #gsearch.fit(self.x,self.y)
+        #self.model.set_params(min_child_weight=gsearch.best_params_['min_child_weight'])
+        #print(gsearch.best_params_)
 
-        self.modelfit()
-        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
+        #self.modelfit()
+        #print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
+        #self.cv_score()
 
         self.model.fit(self.x,self.y)
         return self.model
