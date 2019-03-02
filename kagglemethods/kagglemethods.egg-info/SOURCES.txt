@@ -1,5 +1,7 @@
 setup.py
 kagglemethods/__init__.py
+kagglemethods/eda.py
+kagglemethods/feature_selection.py
 kagglemethods/learning_methods.py
 kagglemethods/lightgbm_base.py
 kagglemethods/lightgbm_classification.py
@@ -7,6 +9,7 @@ kagglemethods/lightgbm_regression.py
 kagglemethods/log_class.py
 kagglemethods/logistic_regression.py
 kagglemethods/nb_classification.py
+kagglemethods/preprocessing.py
 kagglemethods/random_forest_classification.py
 kagglemethods/random_forest_regression.py
 kagglemethods/ridge.py
