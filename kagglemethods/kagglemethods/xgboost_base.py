@@ -11,19 +11,11 @@ import time
 import matplotlib.pyplot as plt
 from . import log_class
 #parameters to be tunned
-#tunned_max_depth = [3,5,7,9]
-#tunned_learning_rate =[0.01,0.015,0.025,0.05,0.1]  # aka eta in xgboost
-#tunned_min_child_weight = [1,3,5,7]
-#tunned_gamma = [0.05,0.1,0.3,0.5,0.7,0.9,1]
-#tunned_colsample_bytree = [0.6,0.7,0.8,1]
-
 tunned_max_depth = [3,5,7,9]
-tunned_learning_rate =[0.05,0.1,0.5]  # aka eta in xgboost
-tunned_min_child_weight = [1,5,7]
-tunned_gamma = [0.05]
-tunned_colsample_bytree = [0.8]
-
-
+tunned_learning_rate =[0.01,0.015,0.025,0.05,0.1]  # aka eta in xgboost
+tunned_min_child_weight = [1,3,5,7]
+tunned_gamma = [0.05,0.1,0.3,0.5,0.7,0.9,1]
+tunned_colsample_bytree = [0.6,0.7,0.8,1]
 # 还需要添加subsample,lambda,alpha等参数
 
 
@@ -46,7 +38,7 @@ metric_name parameter options:
 it is used in xgb.cv function
 '''
 class xgboost_CV(object):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False,processed_data_version_dir = './'):
+    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False,processed_data_version_dir = './',if_classification=True):
         '''
         metric_proba indicates if the metric need the probability to calculate the score
         metric 其实就是训练过程中的评估函数，是我自己手动用来评估训练效果的。
@@ -68,15 +60,20 @@ class xgboost_CV(object):
         self.metric = metric
         self.metric_proba = metric_proba
         self.metric_name = metric_name
-        self.scoring = scoring 
+        self.scoring = scoring
         self.n_jobs = n_jobs
         self.save_model = save_model
         self.train_scores = []
         self.cv_scores = []
         self.logger = log_class.log_class('xgboost',top_level = processed_data_version_dir)
         self.path = processed_data_version_dir
+        self.if_classification = if_classification
 
     def plot_save(self,name='xgboostRegression'):
+        '''
+        :param name: 模型名称
+        :return: None,但保存模型为pkl到相关目录
+        '''
         fig = plt.figure()
         ax1 = fig.add_subplot(1,2,1)
         ax1.plot(self.train_scores)
@@ -86,7 +83,7 @@ class xgboost_CV(object):
         ax2.plot(self.cv_scores)
         ax2.set_xlabel('cv scores')
 
-        #save 
+        #save
         import os
         npath = self.path
         if not os.path.exists(npath+'/curve'):
@@ -108,7 +105,7 @@ class xgboost_CV(object):
             if not os.path.exists(npath+'/modules'):
                 os.mkdir(npath+'/modules')
             joblib.dump(self.model,npath+'/modules/'+name+"_"+cur_time+".pkl")
-    
+
     # get the best num rounds after changing a parameter
     def modelfit(self):
         xgb_param = self.model.get_xgb_params()
@@ -127,8 +124,11 @@ class xgboost_CV(object):
 
 
     def cv_score(self):
-        # 5-fold crossvalidation 
-        kf = StratifiedKFold(n_splits = 5,shuffle=True,random_state=2018)
+        # 5-fold crossvalidation,对回归和分类任务是不同的
+        if self.if_classification:
+            kf = StratifiedKFold(n_splits = 5,shuffle=True,random_state=2018)
+        else:
+            kf = KFold(n_splits=5,shuffle=True,random_state=2018)
         score = []
         params = self.model.get_xgb_params()
         for train_ind,test_ind in kf.split(self.x,self.y):
@@ -148,48 +148,66 @@ class xgboost_CV(object):
 
 
     def cross_validation(self):
-        #scoring = self.scoring 
-        #self.modelfit()
-        #self.cv_score()
+        scoring = self.scoring
+        self.modelfit()
+        self.cv_score()
 
-        #print('tunning learning_rate...')
-        #params = {'learning_rate':tunned_learning_rate}
-        #gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
-        #gsearch.fit(self.x,self.y)
-        #self.model.set_params(learning_rate = gsearch.best_params_['learning_rate'])
-        #print(gsearch.best_params_)
-        
-        #self.modelfit()
-        #print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        #self.cv_score()
+        print('tunning learning_rate...')
+        params = {'learning_rate':tunned_learning_rate}
+        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch.fit(self.x,self.y)
+        self.model.set_params(learning_rate = gsearch.best_params_['learning_rate'])
+        print(gsearch.best_params_)
 
-        #print('tunning max_depth...')
-        #depth_params = {'max_depth':tunned_max_depth}
-        #gsearch = GridSearchCV(estimator= self.model,param_grid =depth_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
-        #gsearch.fit(self.x,self.y)
-        #self.model.set_params(max_depth=gsearch.best_params_['max_depth'])
-        #print(gsearch.best_params_)
+        self.modelfit()
+        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
+        self.cv_score()
 
-        #self.modelfit()
-        #print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        #self.cv_score()
+        print('tunning max_depth...')
+        depth_params = {'max_depth':tunned_max_depth}
+        gsearch = GridSearchCV(estimator= self.model,param_grid =depth_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch.fit(self.x,self.y)
+        self.model.set_params(max_depth=gsearch.best_params_['max_depth'])
+        print(gsearch.best_params_)
+        self.modelfit()
+        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
+        self.cv_score()
 
 
-        #print('tunning min_child_weight...')
-        #min_child_weight_params = {'min_child_weight':tunned_min_child_weight}
-        #gsearch = GridSearchCV(estimator=self.model,param_grid = min_child_weight_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
-        #gsearch.fit(self.x,self.y)
-        #self.model.set_params(min_child_weight=gsearch.best_params_['min_child_weight'])
-        #print(gsearch.best_params_)
+        print('tunning min_child_weight...')
+        min_child_weight_params = {'min_child_weight':tunned_min_child_weight}
+        gsearch = GridSearchCV(estimator=self.model,param_grid = min_child_weight_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+        gsearch.fit(self.x,self.y)
+        self.model.set_params(min_child_weight=gsearch.best_params_['min_child_weight'])
+        print(gsearch.best_params_)
+        self.modelfit()
+        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
+        self.cv_score()
 
-        #self.modelfit()
-        #print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        #self.cv_score()
+
+        print('tunning gamma...')
+        gamma_params = {'gamma':tunned_gamma}
+        gsearch = GridSearchCV(estimator=self.model,param_grid=gamma_params,scoring=scoring,n_jobs=1,cv=3)
+        gsearch.fit(self.x,self.y)
+        self.model.set_params(gamma=gsearch.best_params_['gamma'])
+        print(gsearch.best_params_)
+        self.modelfit()
+        print('best_num_round after tnning para:{}'.format(self.model.get_params()['n_estimators']))
+        self.cv_score()
+
+        print('tunning colsample...')
+        colsample_bytree_params = {'colsample_bytree':tunned_colsample_bytree}
+        gsearch = GridSearchCV(estimator=self.model,param_grid=colsample_bytree_params,scoring=scoring,n_jobs=1,cv=3)
+        gsearch.fit(self.x,self.y)
+        self.model.set_params(colsample_bytree=gsearch.best_params_['colsample_bytree'])
+        print(gsearch.best_params_)
+        self.modelfit()
+        print('best_num_round after tunning para:{}'.format(self.model.get_params()['n_estimators']))
+        self.cv_score()
 
         self.model.fit(self.x,self.y)
         return self.model
 
-        
 
 
 
@@ -198,10 +216,11 @@ class xgboost_CV(object):
 
 
 
-        
 
-    
-    
+
+
+
+
 
 
 

@@ -15,6 +15,7 @@ class ridge_CV(learning_methods.learning_methods):
         self.n_jobs=n_jobs
 
 
+
     #scoring : neg_mean_squared_error 
     def cross_validation(self):
         scoring = self.scoring

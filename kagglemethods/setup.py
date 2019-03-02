@@ -5,7 +5,7 @@
 #)
 from setuptools import setup
 setup(name='kagglemethods',
-      version='0.1',
+      version='1.3',
       description='kaggle data mining methods',
       author='guo',
       packages=['kagglemethods']

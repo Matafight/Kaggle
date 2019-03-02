@@ -15,6 +15,7 @@ kagglemethods/svc.py
 kagglemethods/svr.py
 kagglemethods/xgboost_base.py
 kagglemethods/xgboost_classification.py
+kagglemethods/xgboost_cv.py
 kagglemethods/xgboost_regression.py
 kagglemethods.egg-info/PKG-INFO
 kagglemethods.egg-info/SOURCES.txt
