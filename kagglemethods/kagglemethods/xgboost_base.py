@@ -23,19 +23,6 @@ tunned_colsample_bytree = [0.6,0.7,0.8,1]
 '''
 http://xgboost.readthedocs.io/en/latest/parameter.html
 http://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn
-
-metric_name parameter options:
-1. 'rmse'
-2. 'mae'
-3. 'logloss',  负的对数似然
-4. 'error',二类分类错误率，输出大于0.5时为正例，否则负例
-5. 'error@t',同上，不过指定正负例阈值
-6. 'merror',多类分类错误率
-7. 'mlogloss',多类的logloss
-8. 'auc'
-9. 'ndcg',[Normalized Discounted Cumulative Gain][3]
-10. 'map',[Mean average precision][4]
-it is used in xgb.cv function
 '''
 class xgboost_CV(object):
     def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False,processed_data_version_dir = './',if_classification=True):
