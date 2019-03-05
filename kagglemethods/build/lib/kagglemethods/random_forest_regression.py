@@ -13,9 +13,26 @@ tunned_min_samples_leaf =[1,2,5,10]
 tunned_max_features = ['sqrt','log2','auto',None]
 #add more feautre tunning in the future
 
-#应该写一个基类，然后继承该基类
 class RandomForestRegression_CV(learning_methods.learning_methods):
+    """
+    随机森林交叉验证
+    """
     def __init__(self,x,y,metric,scoring = 'neg_mean_squared_error',n_jobs=3,save_model = False,processed_data_version_dir='./'):
+        """
+        初始化相关参数
+
+        args:
+            x: numpy array
+            y: numpy array
+            metric: sklearn 中的函数，用来在交叉验证中评估验证集上的效果，不过auc 不行，因为auc的参数 不是 (y_true,y_pred) 的形式
+                 optional: http://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics
+            metric_proba: False, 表示 metric 函数是否接受模型输出0-1之间的概率值
+            scoring: 用sklearn自带的 GridSearchCV 时需要的评估函数, 一般是越大越好。默认为 neg_mean_squared_error
+                    可选项: 'neg_log_loss' 'roc_auc' ,'neg_mean_squared_error' 等
+            n_jobs: 多少个线程,默认为3
+            save_model: True or False, 表示是否保存模型,保存路径为 processed_data_version_dir/modules/
+            processed_data_version_dir: 存放log 或者保存模型的目录,默认为 ./ 
+        """
         super(RandomForestRegression_CV,self).__init__(x,y,metric,scoring=scoring,save_model=save_model,processed_data_version_dir=processed_data_version_dir)
         self.model = RandomForestRegressor(n_jobs=n_jobs)
         self.n_jobs = n_jobs
