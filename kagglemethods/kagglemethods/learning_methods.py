@@ -1,6 +1,5 @@
 #_*_coding:utf-8_*_
 
-#这是一个基类，继承该类的子类可以直接使用基类的函数也可以重写基类的函数，xgboost方法就应该重写，sklearn内嵌的方法应该可以直接使用。cv_score 应该支持引入评估准则参数
 from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
@@ -10,8 +9,26 @@ from . import log_class
 
 
 class learning_methods(object):
-    #parameter labels is designed for classification tasks that the training data is highly imbalanced
+    """
+    这是一个基类，继承该类的子类可以直接使用基类的函数也可以重写基类的函数，xgboost方法就应该重写，sklearn内嵌的方法应该可以直接使用。cv_score 应该支持引入评估准则参数
+    """
     def __init__(self,x,y,metric,metric_proba = False,labels = None,scoring = 'auc',save_model=False,processed_data_version_dir='./'):
+        """
+        初始化相关参数
+
+        args:
+            x: numpy array
+            y: numpy array
+            metric: sklearn 中的函数，用来在交叉验证中评估验证集上的效果，不过auc 不行，因为auc的参数 不是 (y_true,y_pred) 的形式
+                 optional: http://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics
+            metric_proba: False, 表示 metric 函数是否接受模型输出0-1之间的概率值
+            labels: 默认为[0,1]， 在分类任务中，进行预测时可能所有预测数据集都是正类或都是负类，这个参数是用来告诉metric 应该是又两个类
+            scoring: 用sklearn自带的 GridSearchCV 时需要的评估函数, 一般是越大越好。默认为 neg_mean_squared_error
+                    可选项: 'neg_log_loss' 'roc_auc' ,'neg_mean_squared_error' 等
+            n_jobs: 多少个线程,默认为2
+            save_model: True or False, 表示是否保存模型,保存路径为 processed_data_version_dir/modules/
+            processed_data_version_dir: 存放log 或者保存模型的目录,默认为 ./ 
+        """
         import os
         if not os.path.exists(processed_data_version_dir):
             os.mkdir(processed_data_version_dir)
