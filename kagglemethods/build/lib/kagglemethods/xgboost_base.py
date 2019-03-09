@@ -25,8 +25,9 @@ http://xgboost.readthedocs.io/en/latest/parameter.html
 http://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn
 '''
 class xgboost_CV(object):
-    def __init__(self,x,y,metric,metric_proba = False,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = False,processed_data_version_dir = './',if_classification=True):
+    def __init__(self,x,y,tunning_params,metric,metric_proba = 0,metric_name='auc',scoring='roc_auc',n_jobs=2,save_model = 0,processed_data_version_dir = './',if_classification=False):
         '''
+        tunning_params: 字典类型，key是待调整参数名,values是候选集合
         metric_proba indicates if the metric need the probability to calculate the score
         metric 其实就是训练过程中的评估函数，是我自己手动用来评估训练效果的。
         metric_name 是xgboost cv 中的一个参数。
@@ -40,6 +41,7 @@ class xgboost_CV(object):
             os.mkdir(processed_data_version_dir)
         self.x =  x
         self.y = y
+        self.tunning_params = tunning_params
         # define the algorithm using default parameters
         self.model = None
         self.cv_folds = 5
@@ -86,7 +88,7 @@ class xgboost_CV(object):
         self.logger.add(str_cv_score)
 
         #determine if save model
-        if self.save_model:
+        if self.save_model==1:
             #save model here
             from sklearn.externals import joblib
             if not os.path.exists(npath+'/modules'):
@@ -96,14 +98,13 @@ class xgboost_CV(object):
     # get the best num rounds after changing a parameter
     def modelfit(self):
         xgb_param = self.model.get_xgb_params()
-        print(xgb_param)
         dtrain = xgb.DMatrix(self.x,label = self.y)
         cvresult = xgb.cv(xgb_param,dtrain,num_boost_round=500,nfold=self.cv_folds,metrics=self.metric_name,early_stopping_rounds=self.early_stopping_rounds)
         self.model.set_params(n_estimators=cvresult.shape[0])
         self.model.fit(self.x,self.y)
 
         #calculate train score
-        if self.metric_proba == False:
+        if self.metric_proba == 0:
             pred = self.model.predict(self.x)
         else:
             pred = self.model.predict_proba(self.x)
@@ -124,7 +125,7 @@ class xgboost_CV(object):
             dtrain = xgb.DMatrix(train_valid_x,label = train_valid_y)
             dtest = xgb.DMatrix(test_valid_x)
             pred_model = xgb.train(params,dtrain,num_boost_round=int(params['n_estimators']))
-            if self.metric_proba == False:
+            if self.metric_proba == 0:
                 pred_test = pred_model.predict(dtest)
             else:
                 pred_test = pred_model.predict_proba(dtest)
@@ -136,63 +137,27 @@ class xgboost_CV(object):
 
     def cross_validation(self):
         scoring = self.scoring
-        self.modelfit()
-        self.cv_score()
-
-        print('tunning learning_rate...')
-        params = {'learning_rate':tunned_learning_rate}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(learning_rate = gsearch.best_params_['learning_rate'])
-        print(gsearch.best_params_)
-
-        self.modelfit()
-        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
-
-        print('tunning max_depth...')
-        depth_params = {'max_depth':tunned_max_depth}
-        gsearch = GridSearchCV(estimator= self.model,param_grid =depth_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(max_depth=gsearch.best_params_['max_depth'])
-        print(gsearch.best_params_)
-        self.modelfit()
-        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
+        for param_item in self.tunning_params.keys():
+                print('tunning {} ...'.format(param_item))
+                params = {param_item:self.tunning_params[param_item]}
+                print(self.model.get_params())
+                gsearch = GridSearchCV(self.model,param_grid=params,scoring=scoring,n_jobs=1,iid=False,cv=3)
+                gsearch.fit(self.x,self.y)
+                #这是一种将变量作为参数名的方法
+                to_set = {param_item:gsearch.best_params_[param_item]}
+                self.model.set_params(**to_set)
+                print(gsearch.best_params_)
+                self.modelfit()
+                print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
+                self.cv_score()
 
 
-        print('tunning min_child_weight...')
-        min_child_weight_params = {'min_child_weight':tunned_min_child_weight}
-        gsearch = GridSearchCV(estimator=self.model,param_grid = min_child_weight_params,scoring=scoring,n_jobs=1,iid=False,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(min_child_weight=gsearch.best_params_['min_child_weight'])
-        print(gsearch.best_params_)
-        self.modelfit()
-        print('best_num_round after tunning para: {}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
-
-
-        print('tunning gamma...')
-        gamma_params = {'gamma':tunned_gamma}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=gamma_params,scoring=scoring,n_jobs=1,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(gamma=gsearch.best_params_['gamma'])
-        print(gsearch.best_params_)
-        self.modelfit()
-        print('best_num_round after tnning para:{}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
-
-        print('tunning colsample...')
-        colsample_bytree_params = {'colsample_bytree':tunned_colsample_bytree}
-        gsearch = GridSearchCV(estimator=self.model,param_grid=colsample_bytree_params,scoring=scoring,n_jobs=1,cv=3)
-        gsearch.fit(self.x,self.y)
-        self.model.set_params(colsample_bytree=gsearch.best_params_['colsample_bytree'])
-        print(gsearch.best_params_)
-        self.modelfit()
-        print('best_num_round after tunning para:{}'.format(self.model.get_params()['n_estimators']))
-        self.cv_score()
-
+        ## 保存最终的参数
+        params = self.model.get_params()
+        self.logger.add(params,ifdict=1)
+        #用新参数重新训练一遍
         self.model.fit(self.x,self.y)
+
         return self.model
 
 
