@@ -1,10 +1,11 @@
 #_*_coding:utf-8_*_
 
 import pandas as pd
-import xgboost_classification as xcv
+import kagglemethods.xgboost_classification as xcv
 from sklearn import metrics
-import lightgbm_classification as lcv
+import kagglemethods.lightgbm_classification as lcv
 from configparser import ConfigParser
+import os
 
 
 def get_config(config_path):
@@ -79,21 +80,44 @@ def load_data(path):
 def base_model(x,y,methods='xgb'):
     if methods=='xgb':
         xgb = xcv.xgboostClassification_CV(x,y,xgb_tunning_params,metric=xgb_params['metric'],metric_proba=xgb_params['metric_proba'],metric_name=xgb_params['metric_name'],scoring=xgb_params['scoring'],n_jobs=xgb_params['n_jobs'],save_model=xgb_params['save_model'],scale_pos_weight=xgb_params['scale_pos_weight'],if_classification=xgb_params['if_classification'])
-        xgb.cross_validation()
+        model = xgb.cross_validation()
     elif methods=='lgb':
         lgb = lcv.lightgbmClassification_CV(x,y,tunning_params,metric=lgb_params['metric'],metric_proba=lgb_params['metric_proba'],metric_name=lgb_params['metric_name'],scoring=lgb_params['scoring'],n_jobs=lgb_params['n_jobs'])
-        lgb.cross_validation()
+        model = lgb.cross_validation()
+    else:
+        print('NOT SUPPORT CURRENT METHOD YET!')
+    return model
+
+
+def generate_submission(test_df,feat_columns,model,submission_name):
+    test_x = test_df[feat_columns].values
+    pred = model.predict(test_x)
+    ##submission
+    sub_df = pd.DataFrame({"ID_code":test_df["ID_code"].values})
+    sub_df["target"] =pred 
+    sub_df.to_csv(submission_name, index=False)
+
+
 
 if __name__=='__main__':
 
-    df,feat_columns,label_column = load_data(config['data']['path'])
+    df,feat_columns,label_column = load_data(config['data']['train_path'])
     pos_df = df.loc[df.target==1,:]
     neg_df = df.loc[df.target==0,:]
     ndf = pd.concat([pos_df.iloc[:500,:],neg_df.iloc[:500,:]],axis=0)
     x = ndf[feat_columns].values
     y = ndf[label_column].values
     method = 'xgb'
-    base_model(x,y,method)
+    model = base_model(x,y,method)
+
+    print('======generating submission======')
+    test_df,feat_columns,label_column = load_data(config['data']['test_path'])
+    test_df = test_df.iloc[:100,:]
+    if not os.path.exists('./submission/'):
+        os.mkdir('./submission/')
+    submission_name = './submission/'+ method+'_submission.csv'
+    generate_submission(test_df,feat_columns,model,submission_name)
+
 
 
 

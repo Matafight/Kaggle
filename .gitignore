@@ -7,6 +7,7 @@ input/
 models/*
 other_codes/
 submissions/
+submission/
 test/
 .idea/
 _pycache_/
