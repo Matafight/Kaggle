@@ -63,7 +63,7 @@ xgb_params = {
 }
 
 
-    
+
 def load_data(path):
     """
 
@@ -94,7 +94,7 @@ def generate_submission(test_df,feat_columns,model,submission_name):
     pred = model.predict(test_x)
     ##submission
     sub_df = pd.DataFrame({"ID_code":test_df["ID_code"].values})
-    sub_df["target"] =pred 
+    sub_df["target"] =pred
     sub_df.to_csv(submission_name, index=False)
 
 
@@ -102,17 +102,17 @@ def generate_submission(test_df,feat_columns,model,submission_name):
 if __name__=='__main__':
 
     df,feat_columns,label_column = load_data(config['data']['train_path'])
-    pos_df = df.loc[df.target==1,:]
-    neg_df = df.loc[df.target==0,:]
-    ndf = pd.concat([pos_df.iloc[:500,:],neg_df.iloc[:500,:]],axis=0)
-    x = ndf[feat_columns].values
-    y = ndf[label_column].values
+    #pos_df = df.loc[df.target==1,:]
+    #neg_df = df.loc[df.target==0,:]
+    #df = pd.concat([pos_df.iloc[:500,:],neg_df.iloc[:500,:]],axis=0)
+    x = df[feat_columns].values
+    y = df[label_column].values
     method = 'xgb'
     model = base_model(x,y,method)
 
     print('======generating submission======')
     test_df,feat_columns,label_column = load_data(config['data']['test_path'])
-    test_df = test_df.iloc[:100,:]
+    #test_df = test_df.iloc[:100,:]
     if not os.path.exists('./submission/'):
         os.mkdir('./submission/')
     submission_name = './submission/'+ method+'_submission.csv'
